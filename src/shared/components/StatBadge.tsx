@@ -1,3 +1,4 @@
+// * StatBadge Component: Telemetry badge display.
 import React from 'react';
 
 interface StatBadgeProps {
