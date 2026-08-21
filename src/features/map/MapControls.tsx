@@ -65,10 +65,10 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
   return (
     <div className="absolute top-4 right-4 z-[400] flex flex-col items-end gap-2 pointer-events-auto">
       {/* Top Action Bar: Manual Refresh Button & Last Ping Badge */}
-      <div className="flex items-center gap-2 bg-slate-950/90 backdrop-blur-md p-1.5 rounded-2xl border border-slate-800 shadow-xl">
+      <div className="flex items-center gap-2 bg-white/95 backdrop-blur-md p-1.5 rounded-2xl border border-slate-200 shadow-xl">
         <div className="hidden sm:flex flex-col items-end px-2">
           <span className="text-[9px] uppercase tracking-wider text-slate-400 font-bold">Data Store Sync</span>
-          <span className="text-[11px] font-mono font-semibold text-cyan-400">
+          <span className="text-[11px] font-mono font-semibold text-cyan-700">
             {formatTimestamp(lastUpdated)}
           </span>
         </div>
@@ -76,7 +76,7 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
         {/* Primary Manual Refresh Button */}
         <button
           onClick={handleRefreshClick}
-          className={`flex items-center gap-1.5 px-3 py-2 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-xl font-bold text-xs shadow-lg shadow-cyan-500/20 active:scale-95 transition-all cursor-pointer ${
+          className={`flex items-center gap-1.5 px-3 py-2 bg-cyan-500 hover:bg-cyan-600 text-white rounded-xl font-bold text-xs shadow-lg shadow-cyan-500/20 active:scale-95 transition-all cursor-pointer ${
             isRefreshing ? 'opacity-80' : ''
           }`}
           title="Manual Refresh: Fetch latest coordinates from backend"
@@ -88,7 +88,7 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
       </div>
 
       {/* Control Buttons Cluster */}
-      <div className="flex flex-col bg-slate-950/90 backdrop-blur-md rounded-2xl border border-slate-800 p-1.5 shadow-xl gap-1">
+      <div className="flex flex-col bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 p-1.5 shadow-xl gap-1">
         {/* Recenter & Follow Toggle */}
         <button
           onClick={() => {
@@ -97,8 +97,8 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
           }}
           className={`p-2.5 rounded-xl transition-all flex items-center justify-center cursor-pointer ${
             isAutoFollow
-              ? 'bg-cyan-500 text-slate-950 shadow-md font-bold'
-              : 'text-slate-300 hover:text-white hover:bg-slate-800'
+              ? 'bg-cyan-500 text-white shadow-md font-bold'
+              : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
           }`}
           title={isAutoFollow ? 'Auto-centering Enabled' : 'Click to Recenter on Rider'}
           aria-label="Recenter on Rider"
@@ -112,8 +112,8 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
             onClick={() => setShowLayerMenu(!showLayerMenu)}
             className={`p-2.5 rounded-xl transition-all flex items-center justify-center cursor-pointer ${
               showLayerMenu
-                ? 'bg-slate-800 text-cyan-400'
-                : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                ? 'bg-slate-100 text-cyan-700'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
             title="Switch Map Tiles"
             aria-label="Switch Map Layer"
@@ -123,7 +123,7 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
 
           {/* Layer Flyout Menu */}
           {showLayerMenu && (
-            <div className="absolute right-12 top-0 bg-slate-900 border border-slate-800 rounded-xl p-2 shadow-2xl w-44 z-50 flex flex-col gap-1 animate-in fade-in zoom-in-95">
+            <div className="absolute right-12 top-0 bg-white border border-slate-200 rounded-xl p-2 shadow-2xl w-44 z-50 flex flex-col gap-1 animate-in fade-in zoom-in-95">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-2 py-1">
                 Map Tiles (100% Free)
               </span>
@@ -134,12 +134,12 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
                 }}
                 className={`text-left text-xs px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer flex items-center justify-between ${
                   currentLayer === 'dark'
-                    ? 'bg-cyan-500/20 text-cyan-300 font-semibold'
-                    : 'text-slate-300 hover:bg-slate-800'
+                    ? 'bg-cyan-500/10 text-cyan-700 font-semibold'
+                    : 'text-slate-600 hover:bg-slate-100'
                 }`}
               >
-                <span>Tactical Dark</span>
-                {currentLayer === 'dark' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
+                <span>Cyber Dark</span>
+                {currentLayer === 'dark' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-600" />}
               </button>
               <button
                 onClick={() => {
@@ -148,12 +148,26 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
                 }}
                 className={`text-left text-xs px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer flex items-center justify-between ${
                   currentLayer === 'osm'
-                    ? 'bg-cyan-500/20 text-cyan-300 font-semibold'
-                    : 'text-slate-300 hover:bg-slate-800'
+                    ? 'bg-cyan-500/10 text-cyan-700 font-semibold'
+                    : 'text-slate-600 hover:bg-slate-100'
                 }`}
               >
-                <span>OpenStreetMap</span>
-                {currentLayer === 'osm' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
+                <span>Positron Light</span>
+                {currentLayer === 'osm' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-600" />}
+              </button>
+              <button
+                onClick={() => {
+                  onLayerChange('satellite');
+                  setShowLayerMenu(false);
+                }}
+                className={`text-left text-xs px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer flex items-center justify-between ${
+                  currentLayer === 'satellite'
+                    ? 'bg-cyan-500/10 text-cyan-700 font-semibold'
+                    : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <span>Satellite Hybrid</span>
+                {currentLayer === 'satellite' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-600" />}
               </button>
               <button
                 onClick={() => {
@@ -162,12 +176,12 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
                 }}
                 className={`text-left text-xs px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer flex items-center justify-between ${
                   currentLayer === 'terrain'
-                    ? 'bg-cyan-500/20 text-cyan-300 font-semibold'
-                    : 'text-slate-300 hover:bg-slate-800'
+                    ? 'bg-cyan-500/10 text-cyan-700 font-semibold'
+                    : 'text-slate-600 hover:bg-slate-100'
                 }`}
               >
                 <span>Topo Terrain</span>
-                {currentLayer === 'terrain' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
+                {currentLayer === 'terrain' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-600" />}
               </button>
             </div>
           )}
