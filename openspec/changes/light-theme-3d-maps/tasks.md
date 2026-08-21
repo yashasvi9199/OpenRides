@@ -22,4 +22,4 @@
 ## 4. Verification
 
 - [x] 4.1 Update E2E test file to verify light mode styles and MapLibre canvas elements.
-- [ ] 4.2 Run pre-commit checks and verify TypeScript type safety.
+- [x] 4.2 Run pre-commit checks and verify TypeScript type safety.
