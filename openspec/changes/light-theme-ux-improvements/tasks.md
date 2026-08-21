@@ -3,6 +3,7 @@
 - [ ] 1.1 Exclude `maplibre-gl` from Vite dependency optimization in `vite.config.ts`.
 - [ ] 1.2 Remove Leaflet stylesheet link from `index.html`.
 - [ ] 1.3 Update global font clamp ranges and container paddings inside `src/index.css`.
+- [ ] 1.4 Inline the MapLibre GL web worker inside `LiveRideMap.tsx` using custom Vite worker provider imports.
 
 ## 2. High-Contrast Overlay Controls & Map Geolocator
 
