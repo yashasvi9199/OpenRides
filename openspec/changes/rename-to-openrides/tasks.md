@@ -14,5 +14,5 @@
 
 ## 4. Verification
 
-- [ ] 4.1 Update scratchpad E2E test file to match the new OpenRides page title.
+- [x] 4.1 Update scratchpad E2E test file to match the new OpenRides page title.
 - [ ] 4.2 Run pre-commit build checks and verify TypeScript type safety.
