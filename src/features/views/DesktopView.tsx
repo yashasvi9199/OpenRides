@@ -73,7 +73,7 @@ export const DesktopView: React.FC<CommonViewProps> = ({
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
           <div className="flex items-center gap-1">
             <button
-              onClick={() => handleRoleChange(currentRole)}
+              onClick={() => setActiveView('map')}
               className={`px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold transition-all cursor-pointer ${
                 activeView === 'map'
                   ? 'bg-slate-100 text-cyan-600 border border-cyan-500/25'
@@ -83,8 +83,12 @@ export const DesktopView: React.FC<CommonViewProps> = ({
               Live Ride & Map
             </button>
             <button
-              onClick={() => setIsGroupModalOpen(true)}
-              className="relative px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold text-slate-500 hover:text-slate-900 transition-all cursor-pointer flex items-center gap-1.5"
+              onClick={() => setActiveView('group')}
+              className={`relative px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeView === 'group'
+                  ? 'bg-slate-100 text-cyan-600 border border-cyan-500/25'
+                  : 'text-slate-500 hover:text-slate-900'
+              }`}
             >
               <span>Group Sync (#{currentSession.code})</span>
               {pendingRequests.length > 0 && (
@@ -94,14 +98,18 @@ export const DesktopView: React.FC<CommonViewProps> = ({
               )}
             </button>
             <button
-              onClick={() => setIsQRModalOpen(true)}
-              className="px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold text-slate-500 hover:text-slate-900 transition-all cursor-pointer flex items-center gap-1"
+              onClick={() => setActiveView('sos')}
+              className={`px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                activeView === 'sos'
+                  ? 'bg-slate-100 text-cyan-600 border border-cyan-500/25'
+                  : 'text-slate-500 hover:text-slate-900'
+              }`}
             >
               <QrCode className="w-3.5 h-3.5 text-red-500" />
               <span>Helmet QR Sticker</span>
             </button>
             <button
-              onClick={() => handleRoleChange('rider')}
+              onClick={() => setActiveView('profile')}
               className={`px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
                 activeView === 'profile'
                   ? 'bg-slate-100 text-cyan-600 border border-cyan-500/25'
@@ -112,8 +120,12 @@ export const DesktopView: React.FC<CommonViewProps> = ({
               <span>Medical I.C.E.</span>
             </button>
             <button
-              onClick={() => setIsHistoryModalOpen(true)}
-              className="px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold text-slate-500 hover:text-slate-900 transition-all cursor-pointer"
+              onClick={() => setActiveView('history')}
+              className={`px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold transition-all cursor-pointer ${
+                activeView === 'history'
+                  ? 'bg-slate-100 text-cyan-600 border border-cyan-500/25'
+                  : 'text-slate-500 hover:text-slate-900'
+              }`}
             >
               Ride History Logs
             </button>
