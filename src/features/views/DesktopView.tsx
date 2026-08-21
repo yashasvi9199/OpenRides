@@ -16,6 +16,7 @@ import { Button } from '../../shared/components/Button';
 import { FamilyDashboard } from '../auth/FamilyDashboard';
 import { QrCode, Heart } from 'lucide-react';
 
+// * DesktopView layout: handles large viewport presentation and multi-column grid layouts.
 export const DesktopView: React.FC<CommonViewProps> = ({
   user,
   currentRole,
@@ -55,7 +56,7 @@ export const DesktopView: React.FC<CommonViewProps> = ({
 }) => {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-slate-950">
-      {/* Top Main Navigation */}
+      {/* ! Warning: Navbar handles SOS triggering; ensure it stays accessible in all viewports. */}
       <Navbar
         currentRole={currentRole}
         user={user}
@@ -67,7 +68,7 @@ export const DesktopView: React.FC<CommonViewProps> = ({
         isSOSActive={currentSession.status === 'sos'}
       />
 
-      {/* Desktop Secondary Sub-Nav Tabs */}
+      {/* ? Should we extract this sub-nav to a separate component to optimize App.tsx bundle size? */}
       <div className="flex border-b border-slate-800/80 bg-slate-900/60 px-4 py-2">
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
           <div className="flex items-center gap-1">
@@ -125,9 +126,10 @@ export const DesktopView: React.FC<CommonViewProps> = ({
         </div>
       </div>
 
-      {/* Main App Body */}
+      {/* * Main content area. Layout items are sized relative to window using clamp layout styles. */}
       <main className="flex-1 max-w-7xl mx-auto w-full p-fluid flex flex-col gap-fluid pb-fluid">
         {currentRole === 'family' ? (
+          // * Render Family Dashboard when role is set to guardian.
           <div className="flex flex-col gap-fluid">
             <FamilyDashboard
               user={user}
@@ -145,6 +147,7 @@ export const DesktopView: React.FC<CommonViewProps> = ({
             <GroupRidersList participants={currentSession.participants} />
           </div>
         ) : activeView === 'profile' ? (
+          // * Render Medical Profile editor.
           <MedicalProfileEditor
             user={user}
             onSave={updateProfile}
@@ -152,6 +155,7 @@ export const DesktopView: React.FC<CommonViewProps> = ({
             onRemoveContact={removeEmergencyContact}
           />
         ) : (
+          // * Rider Live Cockpit: contains live maps, speedometer telemetry, wingmen roster and emergency info card.
           <div className="flex flex-col gap-fluid">
             <LiveTelemetryOverlay
               session={currentSession}
@@ -182,6 +186,7 @@ export const DesktopView: React.FC<CommonViewProps> = ({
                 <GroupRidersList participants={currentSession.participants} />
               </div>
 
+              {/* TODO: Helmet QR sticker print integration option could be placed here. */}
               <Card className="flex flex-col justify-between gap-fluid bg-gradient-to-br from-slate-900 to-slate-950 p-fluid">
                 <div>
                   <div className="flex items-center justify-between border-b border-slate-800 pb-2">
@@ -229,7 +234,7 @@ export const DesktopView: React.FC<CommonViewProps> = ({
         )}
       </main>
 
-      {/* Modals & Overlays */}
+      {/* * Modal overlays are globally appended at the bottom. */}
       <GroupRideModal
         isOpen={isGroupModalOpen}
         onClose={() => setIsGroupModalOpen(false)}
