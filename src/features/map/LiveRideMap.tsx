@@ -1,6 +1,6 @@
 // * LiveRideMap Component: MapLibre GL WebGL 3D map canvas rendering.
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import maplibregl from 'maplibre-gl';
+import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { RideSession, MapTileLayerType, GeoPoint } from '../../shared/types';
 import { MAP_LAYERS } from './MapLayers';
@@ -55,7 +55,7 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
     const coordsString = points.map(p => `${p.lng},${p.lat}`).join(';');
     try {
       const res = await fetch(`https://router.project-osrm.org/route/v1/driving/${coordsString}?overview=full&geometries=geojson`);
-      const data = await res.json();
+      const data: any = await res.json();
       if (data.routes && data.routes[0]) {
         const geojson = data.routes[0].geometry;
         updateRouteLayer(geojson);
@@ -122,7 +122,7 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
     }
     try {
       const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&lat=${currentPos.lat}&lon=${currentPos.lng}`);
-      const data = await res.json();
+      const data: any = await res.json();
       setSearchResults(data.features || []);
     } catch (e) {
       console.error('Photon search failed', e);
