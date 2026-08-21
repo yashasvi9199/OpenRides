@@ -95,30 +95,32 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
             onRecenter();
             onToggleAutoFollow();
           }}
-          className={`p-2.5 rounded-xl transition-all flex items-center justify-center cursor-pointer ${
+          className={`px-3 py-2 rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
             isAutoFollow
               ? 'bg-cyan-500 text-slate-950 shadow-md font-bold'
-              : 'text-slate-300 hover:text-white hover:bg-slate-850'
+              : 'text-slate-300 hover:text-white hover:bg-slate-800'
           }`}
           title={isAutoFollow ? 'Auto-centering Enabled' : 'Click to Recenter on Rider'}
           aria-label="Recenter on Rider"
         >
-          <LocateFixed className="w-4 h-4" />
+          <LocateFixed className="w-4 h-4 shrink-0" />
+          <span className="text-[10px] uppercase font-bold tracking-wider">Recenter</span>
         </button>
 
         {/* Layer Switcher Button */}
         <div className="relative">
           <button
             onClick={() => setShowLayerMenu(!showLayerMenu)}
-            className={`p-2.5 rounded-xl transition-all flex items-center justify-center cursor-pointer ${
+            className={`w-full px-3 py-2 rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
               showLayerMenu
                 ? 'bg-slate-800 text-cyan-400'
-                : 'text-slate-300 hover:text-white hover:bg-slate-850'
+                : 'text-slate-300 hover:text-white hover:bg-slate-800'
             }`}
             title="Switch Map Tiles"
             aria-label="Switch Map Layer"
           >
-            <Layers className="w-4 h-4" />
+            <Layers className="w-4 h-4 shrink-0" />
+            <span className="text-[10px] uppercase font-bold tracking-wider">Layers</span>
           </button>
 
           {/* Layer Flyout Menu */}
@@ -202,29 +204,32 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
         <div className="h-px bg-slate-800 my-0.5" />
         <button
           onClick={onZoomIn}
-          className="p-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center justify-center cursor-pointer"
+          className="px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-2 cursor-pointer"
           title="Zoom In"
           aria-label="Zoom In"
         >
-          <ZoomIn className="w-4 h-4" />
+          <ZoomIn className="w-4 h-4 shrink-0" />
+          <span className="text-[10px] uppercase font-bold tracking-wider">Zoom In</span>
         </button>
         <button
           onClick={onZoomOut}
-          className="p-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center justify-center cursor-pointer"
+          className="px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-2 cursor-pointer"
           title="Zoom Out"
           aria-label="Zoom Out"
         >
-          <ZoomOut className="w-4 h-4" />
+          <ZoomOut className="w-4 h-4 shrink-0" />
+          <span className="text-[10px] uppercase font-bold tracking-wider">Zoom Out</span>
         </button>
 
         {/* Fullscreen Toggle */}
         <button
           onClick={toggleFullscreen}
-          className="p-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center justify-center cursor-pointer"
+          className="px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-2 cursor-pointer"
           title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen Map'}
           aria-label="Toggle Fullscreen"
         >
-          {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+          {isFullscreen ? <Minimize2 className="w-4 h-4 shrink-0" /> : <Maximize2 className="w-4 h-4 shrink-0" />}
+          <span className="text-[10px] uppercase font-bold tracking-wider">Size</span>
         </button>
       </div>
     </div>
