@@ -13,7 +13,7 @@ import MaplibreWorker from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&inlin
 };
 import { RideSession, MapTileLayerType, GeoPoint } from '../../shared/types';
 import { MAP_LAYERS } from './MapLayers';
-import { createRiderMarkerElement, createStartMarkerElement } from './CustomMarkers';
+import { createRiderMarkerElement, createStartMarkerElement, createBlueDotMarkerElement } from './CustomMarkers';
 import { MapControls } from './MapControls';
 import { Phone, Battery, Gauge, ShieldAlert, Navigation2, Trash2, MapPin } from 'lucide-react';
 import { formatTimestamp } from '../../shared/utils/formatters';
@@ -52,6 +52,7 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
   const markersRef = useRef<{ [key: string]: maplibregl.Marker }>({});
   const startMarkerRef = useRef<maplibregl.Marker | null>(null);
   const checkpointMarkersRef = useRef<maplibregl.Marker[]>([]);
+  const blueDotMarkerRef = useRef<maplibregl.Marker | null>(null);
 
   const hostParticipant = session.participants.find((p) => p.role === 'host') || session.participants[0];
   const currentPos = hostParticipant?.currentPosition || { lat: 37.7749, lng: -122.4194 };
@@ -225,6 +226,10 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
     requestLocation();
 
     return () => {
+      if (blueDotMarkerRef.current) {
+        blueDotMarkerRef.current.remove();
+        blueDotMarkerRef.current = null;
+      }
       map.remove();
       mapRef.current = null;
     };
@@ -350,6 +355,16 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
         markersRef.current[participant.id] = marker;
       }
     });
+
+    // * Render blue dot current position marker
+    if (blueDotMarkerRef.current) {
+      blueDotMarkerRef.current.setLngLat([currentPos.lng, currentPos.lat]);
+    } else {
+      const el = createBlueDotMarkerElement();
+      blueDotMarkerRef.current = new maplibregl.Marker({ element: el })
+        .setLngLat([currentPos.lng, currentPos.lat])
+        .addTo(map);
+    }
 
     if (isAutoFollow) {
       map.panTo([currentPos.lng, currentPos.lat]);
