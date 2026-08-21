@@ -17,6 +17,7 @@ import { createRiderMarkerElement, createStartMarkerElement } from './CustomMark
 import { MapControls } from './MapControls';
 import { Phone, Battery, Gauge, ShieldAlert, Navigation2, Trash2 } from 'lucide-react';
 import { formatTimestamp } from '../../shared/utils/formatters';
+import { useRideStore } from '../ride/rideStore';
 import './map.styles.css';
 
 interface LiveRideMapProps {
@@ -161,7 +162,10 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
     if (mapRef.current) mapRef.current.zoomOut();
   }, []);
 
-  // * Initialize MapLibre Map Ref Canvas
+  // * Connect to global tracking store slice
+  const { updateCurrentPosition } = useRideStore();
+
+  // * Initialize MapLibre Map Ref Canvas & Query User GPS Coordinates on Mount
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
@@ -181,11 +185,34 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
 
     mapRef.current = map;
 
+    // * Query initial position using Geolocation API
+    if (typeof window !== 'undefined' && 'geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude, heading, speed } = position.coords;
+          map.setCenter([longitude, latitude]);
+          
+          updateCurrentPosition({
+            lat: latitude,
+            lng: longitude,
+            altitude: position.coords.altitude || 0,
+            heading: heading || 0,
+            speed: speed ? speed * 3.6 : 0,
+            timestamp: Date.now()
+          });
+        },
+        (error) => {
+          console.debug('Failed to query initial location on mount:', error);
+        },
+        { enableHighAccuracy: true, timeout: 5000 }
+      );
+    }
+
     return () => {
       map.remove();
       mapRef.current = null;
     };
-  }, []);
+  }, [updateCurrentPosition]);
 
   // * Style Loader & Elevation DEM Source sync
   useEffect(() => {
