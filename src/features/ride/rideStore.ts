@@ -98,71 +98,10 @@ const createInitialSession = (): RideSession => ({
       isSOS: false,
       distanceCoveredKm: 0,
     },
-    {
-      id: 'usr_rider_02',
-      name: 'Maya Chen',
-      phone: '+1 (555) 912-3847',
-      bikeModel: 'Ducati Panigale V2',
-      role: 'member',
-      status: 'approved',
-      currentPosition: {
-        lat: DEFAULT_COORDINATES.lat + 0.0035,
-        lng: DEFAULT_COORDINATES.lng + 0.0028,
-        heading: 142,
-        speed: 52,
-        timestamp: Date.now(),
-      },
-      speedKmh: 52,
-      batteryPct: 88,
-      lastPing: Date.now(),
-      isSOS: false,
-      distanceCoveredKm: 12.4,
-    },
-    {
-      id: 'usr_rider_03',
-      name: 'Liam Ross',
-      phone: '+1 (555) 837-1920',
-      bikeModel: 'KTM 890 Adventure R',
-      role: 'member',
-      status: 'approved',
-      currentPosition: {
-        lat: DEFAULT_COORDINATES.lat - 0.0042,
-        lng: DEFAULT_COORDINATES.lng - 0.0031,
-        heading: 140,
-        speed: 47,
-        timestamp: Date.now(),
-      },
-      speedKmh: 47,
-      batteryPct: 76,
-      lastPing: Date.now(),
-      isSOS: false,
-      distanceCoveredKm: 11.9,
-    },
   ],
 });
 
-const INITIAL_HISTORY: RideHistoryItem[] = [
-  {
-    id: 'hist_1',
-    title: 'Pacific Highway Sunset Run',
-    date: Date.now() - 86400000 * 2,
-    durationSec: 5420,
-    distanceKm: 78.4,
-    maxSpeedKmh: 104,
-    avgSpeedKmh: 52.3,
-    participantCount: 4,
-  },
-  {
-    id: 'hist_2',
-    title: 'Redwood Canyon Twisties',
-    date: Date.now() - 86400000 * 5,
-    durationSec: 4200,
-    distanceKm: 54.1,
-    maxSpeedKmh: 92,
-    avgSpeedKmh: 46.8,
-    participantCount: 3,
-  },
-];
+const INITIAL_HISTORY: RideHistoryItem[] = [];
 
 let telemetryInterval: any = null;
 let crashCountdownInterval: any = null;
@@ -170,17 +109,7 @@ let geoWatchId: number | null = null;
 
 export const useRideStore = create<RideState>((set, get) => ({
   currentSession: createInitialSession(),
-  pendingRequests: [
-    {
-      id: 'req_init_1',
-      riderId: 'usr_rider_04',
-      riderName: 'Elena Rostova',
-      bikeModel: 'BMW S1000RR M-Package',
-      phone: '+1 (555) 749-0012',
-      requestedAt: Date.now() - 45000,
-      rideCode: '748291',
-    },
-  ],
+  pendingRequests: [],
   crashAlert: null,
   history: INITIAL_HISTORY,
   isTracking: false,
