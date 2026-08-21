@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  /* Fluid Spacing / Gap / Padding variables */
-  --spacing-dynamic: clamp(0.75rem, 1.5vw + 0.25rem, 2rem);
-  --gap-dynamic: clamp(0.75rem, 1.2vw + 0.25rem, 1.75rem);
-  --padding-dynamic: clamp(0.75rem, 2vw + 0.5rem, 3rem);
+  /* Fluid Spacing / Gap / Padding variables - optimized for mobile views to prevent clipping */
+  --spacing-dynamic: clamp(0.5rem, 1vw + 0.2rem, 1.5rem);
+  --gap-dynamic: clamp(0.5rem, 1vw + 0.2rem, 1.25rem);
+  --padding-dynamic: clamp(0.5rem, 1.5vw + 0.3rem, 2rem);
 
-  /* Fluid Font size variables */
-  --font-dynamic-xs: clamp(0.7rem, 0.8vw + 0.4rem, 0.95rem);
-  --font-dynamic-sm: clamp(0.8rem, 1vw + 0.5rem, 1.15rem);
-  --font-dynamic-base: clamp(0.9rem, 1.2vw + 0.6rem, 1.35rem);
-  --font-dynamic-lg: clamp(1.1rem, 1.5vw + 0.7rem, 1.75rem);
-  --font-dynamic-xl: clamp(1.3rem, 2vw + 0.8rem, 2.25rem);
-  --font-dynamic-2xl: clamp(1.6rem, 2.5vw + 0.9rem, 3rem);
-  --font-dynamic-3xl: clamp(2rem, 3.5vw + 1rem, 4.5rem);
+  /* Fluid Font size variables - adjusted min bounds for smaller viewports */
+  --font-dynamic-xs: clamp(0.65rem, 0.6vw + 0.35rem, 0.85rem);
+  --font-dynamic-sm: clamp(0.75rem, 0.8vw + 0.4rem, 1.05rem);
+  --font-dynamic-base: clamp(0.85rem, 1vw + 0.5rem, 1.2rem);
+  --font-dynamic-lg: clamp(1rem, 1.2vw + 0.6rem, 1.5rem);
+  --font-dynamic-xl: clamp(1.2rem, 1.5vw + 0.7rem, 1.9rem);
+  --font-dynamic-2xl: clamp(1.4rem, 2vw + 0.8rem, 2.4rem);
+  --font-dynamic-3xl: clamp(1.75rem, 3vw + 0.9rem, 3.5rem);
 }
 
 .text-fluid-xs { font-size: var(--font-dynamic-xs); }
