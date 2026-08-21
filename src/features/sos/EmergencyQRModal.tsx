@@ -1,3 +1,4 @@
+// * Emergency QR code modal and PDF exporter.
 import React, { useState } from 'react';
 import { UserProfile } from '../../shared/types';
 import { Modal } from '../../shared/components/Modal';
