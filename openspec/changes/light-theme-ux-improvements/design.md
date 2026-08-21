@@ -12,6 +12,7 @@ Transitioning to light mode caused contrast regressions. Modals are also less in
 - Inline the MapLibre web worker utilizing Vite inlined web worker queries.
 - Refine font clamp sizes and responsive padding variables.
 - Rewrite E2E test scripts to utilize Playwright in low-resource headless configuration.
+- Implement Cloudflare KV Caching system for backend database queries and mutations.
 
 **Non-Goals:**
 - Modifying backend server logic or Wrangler bindings.
@@ -37,7 +38,16 @@ We will implement two separate scripts:
 2. Individual test scripts (e.g. `scratchpad/test-map.ts`, `scratchpad/test-profile.ts`) checking individual pages.
 Each test case SHALL vigorously evaluate elements by executing at least 5 verification scenarios (e.g., presence, visibility, typography weight, bounds clipping, content alignment, and interactive state triggers).
 
+### 6. Cloudflare KV Caching System
+Implement a Cache-Aside pattern with Write-Invalidate across Cloudflare KV instantly on DB mutations. Features:
+- Explicit TTL is mandatory.
+- Wrap all cache reads/writes in `try/catch` to fail-open directly to the primary DB without crashing.
+- Namespace all keys with UUIDs.
+- Absolute ban on caching PII, passwords, or raw session tokens.
+
 ## Risks / Trade-offs
 
 - [Risk] Page navigation might feel slow compared to instantaneous modals.
   - *Mitigation:* Keep state in Zustand store to ensure zero-latency re-renders.
+- [Risk] Cache consistency issues.
+  - *Mitigation:* Enforce Write-Invalidate instantly on database update operations.

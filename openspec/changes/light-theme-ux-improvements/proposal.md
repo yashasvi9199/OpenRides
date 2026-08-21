@@ -1,6 +1,6 @@
 ## Why
 
-The recent light theme migration resulted in insufficient color contrast in several headers, text fields, and map control buttons. The MapLibre engine style files fail to load properly due to Vite dependency optimization conflicts, and the dynamically loaded `maplibre-gl-worker.mjs` fails on remote deployments with `NS_ERROR_CORRUPTED_CONTENT` caching errors. The map does not center on the user's initial GPS location on mount. The Medical I.C.E. button triggers a toast instead of showing the page. Modals like Group Sync, QR Sticker, and History Logs need to be rendered inline as full-screen views rather than overlay popups. View components are not dynamically scaling on smaller mobile viewports. Existing E2E testing scripts use high-resource Puppeteer sandboxes, which need to be migrated to lightweight headless Playwright testing with automatic actionability.
+The recent light theme migration resulted in insufficient color contrast in several headers, text fields, and map control buttons. The MapLibre engine style files fail to load properly due to Vite dependency optimization conflicts, and the dynamically loaded `maplibre-gl-worker.mjs` fails on remote deployments with `NS_ERROR_CORRUPTED_CONTENT` caching errors. The map does not center on the user's initial GPS location on mount. The Medical I.C.E. button triggers a toast instead of showing the page. Modals like Group Sync, QR Sticker, and History Logs need to be rendered inline as full-screen views rather than overlay popups. View components are not dynamically scaling on smaller mobile viewports. Existing E2E testing scripts use high-resource Puppeteer sandboxes, which need to be migrated to lightweight headless Playwright testing with automatic actionability. Additionally, the backend functions and worker database mutations lack a proper high-performance caching layer, causing high direct query loads.
 
 ## What Changes
 
@@ -16,12 +16,14 @@ The recent light theme migration resulted in insufficient color contrast in seve
   1. A master integration script (`scratchpad/test-master.ts`) verifying all application elements and page transitions sequentially.
   2. Isolated page/feature scripts (e.g., `scratchpad/test-map.ts`, `scratchpad/test-profile.ts`, etc.) checking individual features.
 - Ensure all test scripts check at least 5 different verification scenarios for each element to vigorously expose layout, visibility, and functional issues.
+- Implement Cloudflare KV Caching system following Cache-Aside and Write-Invalidate patterns for backend database queries and mutations, ensuring explicit TTL values, safe fail-opens, and UUID namespaces.
 
 ## Capabilities
 
 ### New Capabilities
 
 - `ui/responsive-scale`: Responsive mobile dynamic scaling and inline views.
+- `cache/cloudflare-kv`: Cloudflare KV Cache-Aside and Write-Invalidate implementation.
 
 ### Modified Capabilities
 
@@ -39,3 +41,5 @@ The recent light theme migration resulted in insufficient color contrast in seve
 - `src/index.css`
 - `index.html`
 - `scratchpad/test-ui.ts`
+- `worker/index.ts`
+- `functions/api/rides.ts` or related Pages API routes
