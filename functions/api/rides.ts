@@ -1,3 +1,4 @@
+// * Cloudflare Pages Function: Query endpoint for fetching ride telemetry from SQLite D1.
 import { z } from 'zod';
 
 export interface Env {
