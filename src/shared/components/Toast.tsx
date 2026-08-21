@@ -64,10 +64,10 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           };
 
           const typeStyles = {
-            success: 'border-emerald-500/40 bg-slate-900/95 text-emerald-100 shadow-emerald-950/40',
-            warning: 'border-amber-500/40 bg-slate-900/95 text-amber-100 shadow-amber-950/40',
-            error: 'border-red-500/50 bg-slate-900/95 text-red-100 shadow-red-950/50',
-            info: 'border-cyan-500/40 bg-slate-900/95 text-cyan-100 shadow-cyan-950/40',
+            success: 'border-emerald-200 bg-white text-emerald-900 shadow-lg',
+            warning: 'border-amber-200 bg-white text-amber-900 shadow-lg',
+            error: 'border-red-200 bg-white text-red-900 shadow-lg',
+            info: 'border-cyan-200 bg-white text-cyan-900 shadow-lg',
           };
 
           return (
@@ -79,12 +79,12 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             >
               {typeIcons[toast.type]}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white">{toast.title}</p>
-                {toast.message && <p className="text-xs text-slate-300 mt-0.5 leading-relaxed">{toast.message}</p>}
+                <p className="text-sm font-semibold text-slate-900">{toast.title}</p>
+                {toast.message && <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">{toast.message}</p>}
               </div>
               <button
                 onClick={() => removeToast(toast.id)}
-                className="text-slate-400 hover:text-white p-1 rounded-md transition-colors cursor-pointer"
+                className="text-slate-400 hover:text-slate-700 p-1 rounded-md transition-colors cursor-pointer"
                 aria-label="Dismiss toast"
               >
                 <X className="w-4 h-4" />
