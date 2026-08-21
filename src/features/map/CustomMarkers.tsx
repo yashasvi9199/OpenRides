@@ -1,15 +1,17 @@
-// * Custom Leaflet markers definitions.
-import L from 'leaflet';
+// * Custom MapLibre markers element generators.
 import { RideParticipant } from '../../shared/types';
 
 /**
- * Creates custom animated HTML Leaflet icon for the active current rider
+ * Creates custom animated HTML marker element for the active current rider
  */
-export const createRiderMarkerIcon = (
+export const createRiderMarkerElement = (
   participant: RideParticipant,
   isHost: boolean,
   isSOS: boolean
-): L.DivIcon => {
+): HTMLDivElement => {
+  const el = document.createElement('div');
+  el.className = 'custom-rider-marker';
+
   const borderColor = isSOS
     ? 'border-red-500 bg-red-600 shadow-red-500/60'
     : isHost
@@ -24,7 +26,7 @@ export const createRiderMarkerIcon = (
 
   const headingRotation = participant.currentPosition.heading || 0;
 
-  const html = `
+  el.innerHTML = `
     <div class="relative flex items-center justify-center -translate-x-1/2 -translate-y-1/2">
       <!-- Radar Pulse Ring -->
       <div class="radar-ping ${pulseColor} w-12 h-12"></div>
@@ -54,20 +56,17 @@ export const createRiderMarkerIcon = (
     </div>
   `;
 
-  return L.divIcon({
-    html,
-    className: 'custom-rider-marker',
-    iconSize: [36, 36],
-    iconAnchor: [18, 18],
-    popupAnchor: [0, -20],
-  });
+  return el;
 };
 
 /**
- * Creates custom marker icon for the ride Starting Point
+ * Creates custom marker element for the ride Starting Point
  */
-export const createStartMarkerIcon = (): L.DivIcon => {
-  const html = `
+export const createStartMarkerElement = (): HTMLDivElement => {
+  const el = document.createElement('div');
+  el.className = 'custom-start-marker';
+
+  el.innerHTML = `
     <div class="relative flex items-center justify-center -translate-x-1/2 -translate-y-1/2">
       <div class="w-7 h-7 rounded-full bg-emerald-500/90 border-2 border-white flex items-center justify-center text-white shadow-lg">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-slate-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
@@ -78,10 +77,6 @@ export const createStartMarkerIcon = (): L.DivIcon => {
     </div>
   `;
 
-  return L.divIcon({
-    html,
-    className: 'custom-start-marker',
-    iconSize: [28, 28],
-    iconAnchor: [14, 14],
-  });
+  return el;
 };
+
