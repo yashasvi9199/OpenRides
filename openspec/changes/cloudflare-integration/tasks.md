@@ -30,11 +30,11 @@
 
 ## 5. D1 SQLite Database Mapping & Schema
 
-- [ ] 5.1 Initialize local D1 database.
-- [ ] 5.2 Create SQL migrations under migrations/ using D1 CLI.
-- [ ] 5.3 Implement Zod schema mappings for database structures.
-- [ ] 5.4 Ensure database queries use parameterized SQL.
-- [ ] 5.5 Document schema mutations in docs/DATABASE.sql.
+- [x] 5.1 Initialize local D1 database.
+- [x] 5.2 Create SQL migrations under migrations/ using D1 CLI.
+- [x] 5.3 Implement Zod schema mappings for database structures.
+- [x] 5.4 Ensure database queries use parameterized SQL.
+- [x] 5.5 Document schema mutations in docs/DATABASE.sql.
 
 ## 6. Security Headers & Verification
 
