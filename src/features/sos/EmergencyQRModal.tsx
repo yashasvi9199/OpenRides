@@ -36,7 +36,7 @@ export const EmergencyQRModal: React.FC<EmergencyQRModalProps> = ({
 
   const handleDownloadPDF = () => {
     exportEmergencyCardPDF(user);
-    success('PDF Generated', 'Your MotoGuard Medical Card has been downloaded.');
+    success('PDF Generated', 'Your OpenRides Medical Card has been downloaded.');
   };
 
   const handlePrint = () => {
