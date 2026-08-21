@@ -44,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-black text-lg tracking-tight text-white">MotoGuard</span>
+              <span className="font-black text-lg tracking-tight text-white">OpenRides</span>
               <span className="text-[10px] font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 px-1.5 py-0.2 rounded font-mono">
                 100% FREE
               </span>
