@@ -35,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({
   isSOSActive,
 }) => {
   return (
-    <header className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 px-4 py-3">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-3">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
         {/* Brand Logo & Tag */}
         <div className="flex items-center gap-2.5">
@@ -44,25 +44,25 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-black text-lg tracking-tight text-white">OpenRides</span>
-              <span className="text-[10px] font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 px-1.5 py-0.2 rounded font-mono">
+              <span className="font-black text-lg tracking-tight text-slate-900">OpenRides</span>
+              <span className="text-[10px] font-bold bg-cyan-100 text-cyan-800 border border-cyan-200 px-1.5 py-0.2 rounded font-mono">
                 100% FREE
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 hidden sm:block">
+            <p className="text-[10px] text-slate-500 hidden sm:block">
               Bike Rider Safety, Telemetry & Live Emergency Tracking
             </p>
           </div>
         </div>
 
         {/* Center: Role Switcher (Rider vs Family) */}
-        <div className="bg-slate-900 border border-slate-800 p-1 rounded-xl flex items-center gap-1">
+        <div className="bg-slate-100 border border-slate-200 p-1 rounded-xl flex items-center gap-1">
           <button
             onClick={() => onRoleChange('rider')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               currentRole === 'rider'
                 ? 'bg-cyan-500 text-slate-950 shadow-md'
-                : 'text-slate-400 hover:text-white'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <span>🏍️ Rider</span>
@@ -72,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               currentRole === 'family'
                 ? 'bg-cyan-500 text-slate-950 shadow-md'
-                : 'text-slate-400 hover:text-white'
+                : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <span>🛡️ Family</span>
@@ -84,20 +84,20 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({
           {/* Sound Mute/Unmute Toggle */}
           <button
             onClick={onToggleSound}
-            className="p-2 rounded-xl text-slate-400 hover:text-white bg-slate-900 border border-slate-800 hover:border-slate-700 transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-slate-600 hover:text-slate-950 bg-white border border-slate-200 hover:border-slate-300 transition-colors cursor-pointer"
             title={soundEnabled ? 'Mute Alert Audio' : 'Unmute Audio Alerts'}
             aria-label="Toggle sound alerts"
           >
-            {soundEnabled ? <Volume2 className="w-4 h-4 text-cyan-400" /> : <VolumeX className="w-4 h-4 text-slate-500" />}
+            {soundEnabled ? <Volume2 className="w-4 h-4 text-cyan-600" /> : <VolumeX className="w-4 h-4 text-slate-400" />}
           </button>
 
           {/* Quick QR Medical Sticker button */}
           <button
             onClick={onOpenQR}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-200 hover:text-white bg-slate-900 border border-slate-800 hover:border-cyan-500/40 transition-colors cursor-pointer"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-700 hover:text-slate-950 bg-white border border-slate-200 hover:border-cyan-500/40 transition-colors cursor-pointer"
             title="Open Emergency QR Sticker"
           >
-            <QrCode className="w-4 h-4 text-red-400" />
+            <QrCode className="w-4 h-4 text-red-500" />
             <span>Emergency QR</span>
           </button>
 
@@ -107,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = React.memo(({
             className={`px-3 sm:px-4 py-1.5 rounded-xl font-black text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-lg cursor-pointer ${
               isSOSActive
                 ? 'bg-red-600 text-white animate-pulse shadow-red-600/50'
-                : 'bg-red-950/80 text-red-400 border border-red-800/80 hover:bg-red-600 hover:text-white'
+                : 'bg-red-100 text-red-700 border border-red-200 hover:bg-red-600 hover:text-white'
             }`}
           >
             <AlertTriangle className="w-4 h-4" />
