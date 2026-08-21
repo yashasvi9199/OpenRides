@@ -15,7 +15,7 @@ import { RideSession, MapTileLayerType, GeoPoint } from '../../shared/types';
 import { MAP_LAYERS } from './MapLayers';
 import { createRiderMarkerElement, createStartMarkerElement } from './CustomMarkers';
 import { MapControls } from './MapControls';
-import { Phone, Battery, Gauge, ShieldAlert, Navigation2, Trash2 } from 'lucide-react';
+import { Phone, Battery, Gauge, ShieldAlert, Navigation2, Trash2, MapPin } from 'lucide-react';
 import { formatTimestamp } from '../../shared/utils/formatters';
 import { useRideStore } from '../ride/rideStore';
 import './map.styles.css';
@@ -162,8 +162,44 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
     if (mapRef.current) mapRef.current.zoomOut();
   }, []);
 
+  const [locationError, setLocationError] = useState(false);
+
   // * Connect to global tracking store slice
   const { updateCurrentPosition } = useRideStore();
+
+  // * Geolocation lookup executor
+  const requestLocation = useCallback(() => {
+    if (typeof window === 'undefined' || !('geolocation' in navigator)) {
+      setLocationError(true);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude, heading, speed } = position.coords;
+        setLocationError(false);
+        if (mapRef.current) {
+          mapRef.current.setCenter([longitude, latitude]);
+        }
+        
+        updateCurrentPosition({
+          lat: latitude,
+          lng: longitude,
+          altitude: position.coords.altitude || 0,
+          heading: heading || 0,
+          speed: speed ? speed * 3.6 : 0,
+          accuracy: position.coords.accuracy,
+          timestamp: Date.now()
+        });
+      },
+      (error) => {
+        console.debug('Failed to query precise coordinates:', error);
+        setLocationError(true);
+      },
+      // * Setup pinpoint accuracy tracking with high accuracy, immediate updates, and 15s timeout
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
+    );
+  }, [updateCurrentPosition]);
 
   // * Initialize MapLibre Map Ref Canvas & Query User GPS Coordinates on Mount
   useEffect(() => {
@@ -186,35 +222,13 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
     mapRef.current = map;
 
     // * Query initial position using Geolocation API
-    if (typeof window !== 'undefined' && 'geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude, heading, speed } = position.coords;
-          map.setCenter([longitude, latitude]);
-          
-          updateCurrentPosition({
-            lat: latitude,
-            lng: longitude,
-            altitude: position.coords.altitude || 0,
-            heading: heading || 0,
-            speed: speed ? speed * 3.6 : 0,
-            accuracy: position.coords.accuracy,
-            timestamp: Date.now()
-          });
-        },
-        (error) => {
-          console.debug('Failed to query initial location on mount:', error);
-        },
-        // * Setup pinpoint accuracy tracking with high accuracy, immediate updates, and 15s timeout
-        { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
-      );
-    }
+    requestLocation();
 
     return () => {
       map.remove();
       mapRef.current = null;
     };
-  }, [updateCurrentPosition]);
+  }, [requestLocation]);
 
   // * Style Loader & Elevation DEM Source sync
   useEffect(() => {
@@ -447,6 +461,7 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
         lastUpdated={session.lastUpdated}
         isAutoFollow={isAutoFollow}
         onToggleAutoFollow={() => setIsAutoFollow(!isAutoFollow)}
+        onLocateExact={requestLocation}
         heading={currentPos.heading || 0}
       />
 
@@ -465,8 +480,26 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
         </div>
       )}
 
-      {/* MapLibre Canvas Container */}
-      <div ref={mapContainerRef} className="w-full h-full" />
+      {/* MapLibre Canvas Container / Location Error Alert Overlay */}
+      {locationError ? (
+        <div className="w-full h-full min-h-[300px] flex flex-col items-center justify-center bg-slate-950 p-6 text-center text-white z-[300] relative">
+          <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-3xl mb-4 text-red-400 animate-bounce">
+            <MapPin className="w-8 h-8" />
+          </div>
+          <h3 className="text-sm font-black uppercase tracking-wider text-slate-100 mb-1">Location Services Required</h3>
+          <p className="text-xs text-slate-400 max-w-xs mb-6 font-sans">
+            Unable to determine your precise location. Please enable location services in your browser settings to track safety telemetry.
+          </p>
+          <button
+            onClick={requestLocation}
+            className="px-5 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg shadow-cyan-500/20 active:scale-95 transition-all cursor-pointer"
+          >
+            Enable Location Services
+          </button>
+        </div>
+      ) : (
+        <div ref={mapContainerRef} className="w-full h-full" />
+      )}
 
       {/* Map Bottom Telemetry Ticker */}
       <div className="absolute bottom-3 left-3 right-3 sm:right-auto z-[400] bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-200 shadow-xl flex items-center justify-between sm:justify-start gap-4">
