@@ -96,6 +96,38 @@ export const MobileView: React.FC<CommonViewProps> = ({
             onAddContact={addEmergencyContact}
             onRemoveContact={removeEmergencyContact}
           />
+        ) : activeView === 'group' ? (
+          // * Inline Group Sync Page View (replacing popup modal)
+          <div className="flex flex-col gap-fluid">
+            <Card className="p-fluid">
+              <GroupRideModalContent
+                rideCode={currentSession.code}
+                onJoinCodeSubmit={joinGroupWithCode}
+                onSimulateIncomingRequest={createJoinRequestSimulation}
+              />
+            </Card>
+          </div>
+        ) : activeView === 'sos' ? (
+          // * Inline Helmet QR sticker badge View (replacing popup modal)
+          <div className="flex flex-col gap-fluid">
+            <Card className="p-fluid">
+              <EmergencyQRModalContent
+                user={user}
+                onOpenPublicView={() => setIsPublicEmergencyViewActive(true)}
+              />
+            </Card>
+          </div>
+        ) : activeView === 'history' ? (
+          // * Inline Ride History logs Page View (replacing popup modal)
+          <div className="flex flex-col gap-fluid">
+            <Card className="p-fluid">
+              <div className="flex items-center gap-2 border-b border-slate-200 pb-3 mb-4">
+                <History className="w-5 h-5 text-cyan-600" />
+                <h2 className="text-lg font-bold text-slate-900">Ride History & Telemetry Logs</h2>
+              </div>
+              <RideHistoryModalContent history={history} />
+            </Card>
+          </div>
         ) : (
           // * Rider Live Cockpit: contains live maps, speedometer telemetry, and group wingmen list.
           <div className="flex flex-col gap-fluid">
@@ -110,11 +142,11 @@ export const MobileView: React.FC<CommonViewProps> = ({
               onPauseRide={pauseRide}
               onResumeRide={resumeRide}
               onStopRide={stopRide}
-              onOpenGroupModal={() => setIsGroupModalOpen(true)}
+              onOpenGroupModal={() => setActiveView('group')}
               onTriggerSOS={triggerSOS}
               onDismissSOS={dismissSOS}
               onSimulateCrash={triggerSimulatedCrash}
-              onOpenHistory={() => setIsHistoryModalOpen(true)}
+              onOpenHistory={() => setActiveView('history')}
             />
 
             <LiveRideMap
@@ -127,15 +159,6 @@ export const MobileView: React.FC<CommonViewProps> = ({
           </div>
         )}
       </main>
-
-      {/* * Modals & Overlays */}
-      <GroupRideModal
-        isOpen={isGroupModalOpen}
-        onClose={() => setIsGroupModalOpen(false)}
-        rideCode={currentSession.code}
-        onJoinCodeSubmit={joinGroupWithCode}
-        onSimulateIncomingRequest={createJoinRequestSimulation}
-      />
 
       <GroupRiderApprovalModal
         pendingRequests={pendingRequests}
@@ -152,32 +175,11 @@ export const MobileView: React.FC<CommonViewProps> = ({
         }}
       />
 
-      <EmergencyQRModal
-        isOpen={isQRModalOpen}
-        onClose={() => setIsQRModalOpen(false)}
-        user={user}
-        onOpenPublicView={() => setIsPublicEmergencyViewActive(true)}
-      />
-
-      <RideHistoryModal
-        isOpen={isHistoryModalOpen}
-        onClose={() => setIsHistoryModalOpen(false)}
-        history={history}
-      />
-
       {/* * Bottom navigation bar is rendered fixed at the screen bottom. */}
       <BottomNav
         activeView={activeView}
         onViewChange={(view) => {
-          if (view === 'group') {
-            setIsGroupModalOpen(true);
-          } else if (view === 'sos') {
-            setIsQRModalOpen(true);
-          } else if (view === 'history') {
-            setIsHistoryModalOpen(true);
-          } else {
-            setActiveView(view);
-          }
+          setActiveView(view);
         }}
         pendingRequestCount={pendingRequests.length}
       />
