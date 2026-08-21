@@ -1,3 +1,4 @@
+// * Unauthenticated public emergency profile display.
 import React from 'react';
 import { UserProfile } from '../../shared/types';
 import { Card } from '../../shared/components/Card';
