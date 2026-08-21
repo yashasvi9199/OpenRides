@@ -1,3 +1,4 @@
+// * Capacitor utilities: native device bridging.
 /**
  * Safety & Platform Guardrails for Web & Capacitor Hybrid Mobile deployments.
  * Prevents browser execution crashes when plugins or native hardware APIs are absent.
