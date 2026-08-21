@@ -1,7 +1,7 @@
 ## 1. Clean Initialization & Store Cleanup
 
-- [ ] 1.1 Remove dummy participants and initial history lists from `src/features/ride/rideStore.ts`.
-- [ ] 1.2 Clear mock profile default values from `src/features/auth/authStore.ts`.
+- [x] 1.1 Remove dummy participants and initial history lists from `src/features/ride/rideStore.ts`.
+- [x] 1.2 Clear mock profile default values from `src/features/auth/authStore.ts`.
 
 ## 2. Light Theme Integration
 
