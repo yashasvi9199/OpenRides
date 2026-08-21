@@ -1,3 +1,4 @@
+// * Host participant request validation modal.
 import React from 'react';
 import { PendingJoinRequest } from '../../shared/types';
 import { Modal } from '../../shared/components/Modal';
