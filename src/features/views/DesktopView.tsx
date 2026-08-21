@@ -5,16 +5,16 @@ import { LiveRideMap } from '../map/LiveRideMap';
 import { LiveTelemetryOverlay } from '../ride/LiveTelemetryOverlay';
 import { RideController } from '../ride/RideController';
 import { GroupRidersList } from '../ride/GroupRidersList';
-import { GroupRideModal } from '../ride/GroupRideModal';
 import { GroupRiderApprovalModal } from '../ride/GroupRiderApprovalModal';
 import { CrashDetectionBanner } from '../ride/CrashDetectionBanner';
-import { EmergencyQRModal } from '../sos/EmergencyQRModal';
+import { EmergencyQRModal, EmergencyQRModalContent } from '../sos/EmergencyQRModal';
 import { MedicalProfileEditor } from '../sos/MedicalProfileEditor';
-import { RideHistoryModal } from '../ride/RideHistoryModal';
+import { RideHistoryModal, RideHistoryModalContent } from '../ride/RideHistoryModal';
+import { GroupRideModal, GroupRideModalContent } from '../ride/GroupRideModal';
 import { Card } from '../../shared/components/Card';
 import { Button } from '../../shared/components/Button';
 import { FamilyDashboard } from '../auth/FamilyDashboard';
-import { QrCode, Heart } from 'lucide-react';
+import { QrCode, Heart, History } from 'lucide-react';
 
 // * DesktopView layout: handles large viewport presentation and multi-column grid layouts.
 export const DesktopView: React.FC<CommonViewProps> = ({
@@ -166,6 +166,38 @@ export const DesktopView: React.FC<CommonViewProps> = ({
             onAddContact={addEmergencyContact}
             onRemoveContact={removeEmergencyContact}
           />
+        ) : activeView === 'group' ? (
+          // * Inline Group Sync Page View (replacing popup modal)
+          <div className="max-w-2xl mx-auto w-full flex flex-col gap-fluid">
+            <Card className="p-fluid">
+              <GroupRideModalContent
+                rideCode={currentSession.code}
+                onJoinCodeSubmit={joinGroupWithCode}
+                onSimulateIncomingRequest={createJoinRequestSimulation}
+              />
+            </Card>
+          </div>
+        ) : activeView === 'sos' ? (
+          // * Inline Helmet QR sticker badge View (replacing popup modal)
+          <div className="max-w-2xl mx-auto w-full flex flex-col gap-fluid">
+            <Card className="p-fluid">
+              <EmergencyQRModalContent
+                user={user}
+                onOpenPublicView={() => setIsPublicEmergencyViewActive(true)}
+              />
+            </Card>
+          </div>
+        ) : activeView === 'history' ? (
+          // * Inline Ride History logs Page View (replacing popup modal)
+          <div className="max-w-3xl mx-auto w-full flex flex-col gap-fluid">
+            <Card className="p-fluid">
+              <div className="flex items-center gap-2 border-b border-slate-200 pb-3 mb-4">
+                <History className="w-5 h-5 text-cyan-600" />
+                <h2 className="text-lg font-bold text-slate-900">Ride History & Telemetry Logs</h2>
+              </div>
+              <RideHistoryModalContent history={history} />
+            </Card>
+          </div>
         ) : (
           // * Rider Live Cockpit: contains live maps, speedometer telemetry, wingmen roster and emergency info card.
           <div className="flex flex-col gap-fluid">
@@ -180,11 +212,11 @@ export const DesktopView: React.FC<CommonViewProps> = ({
               onPauseRide={pauseRide}
               onResumeRide={resumeRide}
               onStopRide={stopRide}
-              onOpenGroupModal={() => setIsGroupModalOpen(true)}
+              onOpenGroupModal={() => setActiveView('group')}
               onTriggerSOS={triggerSOS}
               onDismissSOS={dismissSOS}
               onSimulateCrash={triggerSimulatedCrash}
-              onOpenHistory={() => setIsHistoryModalOpen(true)}
+              onOpenHistory={() => setActiveView('history')}
             />
 
             <LiveRideMap
@@ -198,7 +230,7 @@ export const DesktopView: React.FC<CommonViewProps> = ({
                 <GroupRidersList participants={currentSession.participants} />
               </div>
 
-              {/* TODO: Helmet QR sticker print integration option could be placed here. */}
+              {/* Helmet ID Card Quick Navigation badge */}
               <Card className="flex flex-col justify-between gap-fluid p-fluid">
                 <div>
                   <div className="flex items-center justify-between border-b border-slate-100 pb-2">
@@ -227,8 +259,8 @@ export const DesktopView: React.FC<CommonViewProps> = ({
                   <Button
                     variant="outline"
                     size="sm"
-                    leftIcon={<QrCode className="w-3.5 h-3.5 text-cyan-400" />}
-                    onClick={() => setIsQRModalOpen(true)}
+                    leftIcon={<QrCode className="w-3.5 h-3.5 text-cyan-500" />}
+                    onClick={() => setActiveView('sos')}
                   >
                     View QR & PDF Badge
                   </Button>
@@ -245,15 +277,6 @@ export const DesktopView: React.FC<CommonViewProps> = ({
           </div>
         )}
       </main>
-
-      {/* * Modal overlays are globally appended at the bottom. */}
-      <GroupRideModal
-        isOpen={isGroupModalOpen}
-        onClose={() => setIsGroupModalOpen(false)}
-        rideCode={currentSession.code}
-        onJoinCodeSubmit={joinGroupWithCode}
-        onSimulateIncomingRequest={createJoinRequestSimulation}
-      />
 
       <GroupRiderApprovalModal
         pendingRequests={pendingRequests}
