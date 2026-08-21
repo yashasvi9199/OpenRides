@@ -21,7 +21,7 @@ const DEFAULT_RIDER_PROFILE: UserProfile = {
   name: 'Alex "Apex" Vance',
   role: 'rider',
   phone: '+1 (555) 234-8901',
-  email: 'alex.rider@motoguard.io',
+  email: 'alex.rider@openrides.io',
   bikeModel: 'Yamaha MT-09 SP (2024)',
   bikeNumber: 'CA • 9MOTO88',
   bloodGroup: 'O Positive (O+)',
@@ -55,16 +55,20 @@ const DEFAULT_RIDER_PROFILE: UserProfile = {
   organDonor: true,
   insuranceCompany: 'Progressive Motorcycle Safety & Health',
   insurancePolicyNumber: 'POL-99281-MT',
-  qrToken: 'motoguard-alex-9921',
+  qrToken: 'openrides-alex-9921',
   avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
 };
 
-const STORAGE_KEY = 'motoguard_profile_v2';
+const STORAGE_KEY = 'openrides_profile_v2';
+const LEGACY_STORAGE_KEY = 'motoguard_profile_v2';
 
 const loadSavedProfile = (): UserProfile => {
   if (typeof window === 'undefined') return DEFAULT_RIDER_PROFILE;
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    let saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) {
+      saved = localStorage.getItem(LEGACY_STORAGE_KEY);
+    }
     if (saved) {
       return { ...DEFAULT_RIDER_PROFILE, ...JSON.parse(saved) };
     }
