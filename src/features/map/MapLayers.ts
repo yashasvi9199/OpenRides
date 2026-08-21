@@ -1,3 +1,4 @@
+// * Map Layers definition configuration.
 export interface TileLayerConfig {
   id: string;
   name: string;
