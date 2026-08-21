@@ -1,3 +1,4 @@
+// * Cloudflare Pages Function: Handles R2 bucket downloads with ETag and Cache-Control headers.
 import { z } from 'zod';
 
 export interface Env {
