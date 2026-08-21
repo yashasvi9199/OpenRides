@@ -14,6 +14,7 @@ import { MedicalProfileEditor } from '../sos/MedicalProfileEditor';
 import { RideHistoryModal } from '../ride/RideHistoryModal';
 import { FamilyDashboard } from '../auth/FamilyDashboard';
 
+// * MobileView layout: optimised for one-handed operation and smaller display sizes.
 export const MobileView: React.FC<CommonViewProps> = ({
   user,
   currentRole,
@@ -65,9 +66,10 @@ export const MobileView: React.FC<CommonViewProps> = ({
         isSOSActive={currentSession.status === 'sos'}
       />
 
-      {/* Main App Body */}
+      {/* ! Warning: Ensure main body element uses bottom padding clamp so bottom nav overlay does not block scroll. */}
       <main className="flex-1 max-w-7xl mx-auto w-full p-fluid flex flex-col gap-fluid pb-[clamp(5rem,10vw,7rem)]">
         {currentRole === 'family' ? (
+          // * Render Family Dashboard when role is set to guardian.
           <div className="flex flex-col gap-fluid">
             <FamilyDashboard
               user={user}
@@ -85,6 +87,7 @@ export const MobileView: React.FC<CommonViewProps> = ({
             <GroupRidersList participants={currentSession.participants} />
           </div>
         ) : activeView === 'profile' ? (
+          // * Render Medical Profile editor.
           <MedicalProfileEditor
             user={user}
             onSave={updateProfile}
@@ -92,6 +95,7 @@ export const MobileView: React.FC<CommonViewProps> = ({
             onRemoveContact={removeEmergencyContact}
           />
         ) : (
+          // * Rider Live Cockpit: contains live maps, speedometer telemetry, and group wingmen list.
           <div className="flex flex-col gap-fluid">
             <LiveTelemetryOverlay
               session={currentSession}
@@ -122,7 +126,7 @@ export const MobileView: React.FC<CommonViewProps> = ({
         )}
       </main>
 
-      {/* Modals & Overlays */}
+      {/* * Modals & Overlays */}
       <GroupRideModal
         isOpen={isGroupModalOpen}
         onClose={() => setIsGroupModalOpen(false)}
@@ -159,7 +163,7 @@ export const MobileView: React.FC<CommonViewProps> = ({
         history={history}
       />
 
-      {/* Mobile Bottom Navigation Bar */}
+      {/* * Bottom navigation bar is rendered fixed at the screen bottom. */}
       <BottomNav
         activeView={activeView}
         onViewChange={(view) => {
