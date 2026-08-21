@@ -6,8 +6,8 @@
 ## 2. Separate View Implementations
 
 - [x] 2.1 Create the `src/features/views/DesktopView.tsx` component and migrate the desktop-specific layout markup from `src/App.tsx`.
-- [ ] 2.2 Create the `src/features/views/MobileView.tsx` component and migrate the mobile-specific layout markup from `src/App.tsx`.
-- [ ] 2.3 Refactor layout elements within both view files to use fluid clamp styling instead of static size/spacing variables.
+- [x] 2.2 Create the `src/features/views/MobileView.tsx` component and migrate the mobile-specific layout markup from `src/App.tsx`.
+- [x] 2.3 Refactor layout elements within both view files to use fluid clamp styling instead of static size/spacing variables.
 
 ## 3. Dynamic Router and App Integration
 
