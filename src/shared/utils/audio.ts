@@ -1,3 +1,4 @@
+// * Audio utilities: siren and check-in beep alerts.
 /**
  * Web Audio API synthesizer for safety alerts, SOS sirens, and tactile UI feedback.
  * Operates without external audio assets.
