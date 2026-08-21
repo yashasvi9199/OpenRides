@@ -1,3 +1,4 @@
+// * Real-time dynamic telemetry readout panel.
 import React from 'react';
 import { RideSession } from '../../shared/types';
 import { StatBadge } from '../../shared/components/StatBadge';
