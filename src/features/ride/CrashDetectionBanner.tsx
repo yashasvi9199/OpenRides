@@ -1,3 +1,4 @@
+// * Crash Detection countdown alert overlay.
 import React from 'react';
 import { CrashAlert } from '../../shared/types';
 import { Button } from '../../shared/components/Button';
