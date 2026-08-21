@@ -1,3 +1,4 @@
+// * Card Component: Layout card panel.
 import React from 'react';
 
 interface CardProps {
