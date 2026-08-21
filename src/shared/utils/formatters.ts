@@ -1,3 +1,4 @@
+// * Formatting utilities: dates, distances, and speed string outputs.
 /**
  * Number and string formatters for ride metrics
  */
