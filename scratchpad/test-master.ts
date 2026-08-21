@@ -78,7 +78,7 @@ async function runMasterTests(): Promise<void> {
       const hostTab = page.getByRole('button', { name: /My Ride Code/ });
       const joinTab = page.getByRole('button', { name: /Enter 6-Digit Code/ });
       const secretCode = page.getByText(/Your 6-Digit Secret Ride Code/);
-      const fastJoinQR = page.locator('svg'); // QR SVG is rendered
+      const fastJoinQR = page.locator('svg[role="img"]'); // QR SVG is rendered with role="img"
 
       await expect(groupHeading).toBeVisible();
       await expect(hostTab).toBeVisible();
