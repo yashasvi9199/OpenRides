@@ -177,10 +177,11 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
       center: [currentPos.lng, currentPos.lat],
       zoom: 15,
       pitch: 45,
-      bearing: 0,
+      bearing: -17.6,
       pitchWithRotate: true,
       dragRotate: true,
       maxPitch: 60,
+      antialias: true
     });
 
     mapRef.current = map;
