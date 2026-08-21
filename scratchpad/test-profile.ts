@@ -28,7 +28,7 @@ async function runProfileTests(): Promise<void> {
 
       // * Scenario 1: Confirm profile container headers
       console.log('Scenario 1: Checking profile layout main page headers...');
-      const heading = page.getByRole('heading', { name: 'Emergency Medical Profile' });
+      const heading = page.getByRole('heading', { name: 'Rider Medical Profile & I.C.E.' });
       await expect(heading).toBeVisible();
 
       // * Scenario 2: Validate input fields values
@@ -40,17 +40,17 @@ async function runProfileTests(): Promise<void> {
 
       // * Scenario 3: Verify ICE contacts form section
       console.log('Scenario 3: Checking ICE contacts inputs additions...');
-      const addContactBtn = page.getByRole('button', { name: /Add ICE Contact/ });
+      const addContactBtn = page.getByRole('button', { name: /Add Contact/ });
       await expect(addContactBtn).toBeVisible();
 
       // * Scenario 4: Allergies list configuration inputs
       console.log('Scenario 4: Checking Allergies description notes area...');
-      const allergiesTextArea = page.locator('textarea[placeholder*="Allergies"]');
+      const allergiesTextArea = page.locator('input[placeholder*="Penicillin"]');
       await expect(allergiesTextArea).toBeVisible();
 
       // * Scenario 5: Submit form saving actionability checks
       console.log('Scenario 5: Check save profile button trigger...');
-      const saveBtn = page.getByRole('button', { name: /Save Medical Profile/ });
+      const saveBtn = page.getByRole('button', { name: /Save Changes/ });
       await expect(saveBtn).toBeVisible();
 
       console.log('Playwright Profile features E2E tests verified successfully! ✓');

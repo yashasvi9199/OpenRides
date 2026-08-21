@@ -93,11 +93,11 @@ async function runMasterTests(): Promise<void> {
       await expect(medicalTabBtn).toBeVisible();
       await medicalTabBtn.click();
 
-      const profileHeading = page.getByRole('heading', { name: 'Emergency Medical Profile' });
+      const profileHeading = page.getByRole('heading', { name: 'Rider Medical Profile & I.C.E.' });
       const bloodGroupLabel = page.getByText('Blood Group');
-      const allergiesLabel = page.getByText('Allergies & Medical Notes');
-      const contactLabel = page.getByText('ICE Contacts');
-      const saveBtn = page.getByRole('button', { name: /Save Medical Profile/ });
+      const allergiesLabel = page.getByText('Allergies & Medical Alerts');
+      const contactLabel = page.getByText('In Case of Emergency (I.C.E.) Contacts');
+      const saveBtn = page.getByRole('button', { name: /Save Changes/ });
 
       await expect(profileHeading).toBeVisible();
       await expect(bloodGroupLabel).toBeVisible();
