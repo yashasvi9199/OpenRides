@@ -6,7 +6,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import MaplibreWorker from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&inline';
 
 // * Register custom worker provider construct dynamically before map canvas mounting
-maplibregl.config.WORKER_PROVIDER = {
+(maplibregl.config as any).WORKER_PROVIDER = {
   getWorker() {
     return new MaplibreWorker();
   }
