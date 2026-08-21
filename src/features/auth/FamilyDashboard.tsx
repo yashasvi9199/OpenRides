@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { formatDistance, formatDuration, formatSpeed, formatTimestamp } from '../../shared/utils/formatters';
 import { useToast } from '../../shared/components/Toast';
+import './auth.styles.css';
 
 interface FamilyDashboardProps {
   user: UserProfile;

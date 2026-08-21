@@ -6,6 +6,7 @@ import { createRiderMarkerIcon, createStartMarkerIcon } from './CustomMarkers';
 import { MapControls } from './MapControls';
 import { Phone, Battery, Gauge, UserCheck, ShieldAlert } from 'lucide-react';
 import { formatTimestamp } from '../../shared/utils/formatters';
+import './map.styles.css';
 
 interface LiveRideMapProps {
   session: RideSession;

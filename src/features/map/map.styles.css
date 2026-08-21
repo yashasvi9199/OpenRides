@@ -1,0 +1,38 @@
+/* Custom Leaflet Map Container Tweaks */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background-color: #0f172a !important;
+  z-index: 1;
+}
+
+/* Custom Marker Styling */
+.custom-rider-marker, .custom-group-marker, .custom-start-marker, .custom-sos-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Radar pulse animation for live rider */
+@keyframes radar-pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.9;
+  }
+  70% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.radar-ping {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  animation: radar-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}

@@ -6,6 +6,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { exportEmergencyCardPDF } from './pdfExport';
 import { QrCode, Download, Printer, Copy, Check, ExternalLink, ShieldCheck, Heart } from 'lucide-react';
 import { useToast } from '../../shared/components/Toast';
+import './sos.styles.css';
 
 interface EmergencyQRModalProps {
   isOpen: boolean;

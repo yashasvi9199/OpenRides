@@ -11,6 +11,7 @@ import {
   Activity,
   Sparkles,
 } from 'lucide-react';
+import './ride.styles.css';
 
 interface RideControllerProps {
   session: RideSession;
