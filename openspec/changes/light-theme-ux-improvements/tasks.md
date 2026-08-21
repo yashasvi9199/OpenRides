@@ -18,5 +18,5 @@
 
 ## 4. Verification
 
-- [ ] 4.1 Install playwright packages and rewrite `scratchpad/test-ui.ts` to utilize headless Playwright, low-resource flags (`--disable-gpu`, `--no-sandbox`, `--disable-dev-shm-usage`), modern locators (`page.getByRole`), and native auto-actionability assertions.
+- [ ] 4.1 Install playwright packages and implement E2E tests: `scratchpad/test-master.ts` (master sequential run) and feature scripts (e.g. `scratchpad/test-map.ts`, `scratchpad/test-profile.ts`) checking all elements, using Playwright low-resource flags (`--disable-gpu`, `--no-sandbox`, `--disable-dev-shm-usage`), modern locators, and native assertions with 5 verification scenarios per element.
 - [ ] 4.2 Run pre-commit checks and verify TypeScript type safety.

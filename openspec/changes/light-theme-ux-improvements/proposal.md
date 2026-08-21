@@ -12,6 +12,10 @@ The recent light theme migration resulted in insufficient color contrast in seve
 - Refactor modals to inline full-screen page views controlled by `activeView`.
 - Apply fluid clamp scaling, dvh heights, and grid layouts to keep mobile panels fit on the screen without overflow.
 - Migrate E2E testing from Puppeteer to Playwright with low-resource flags (`--disable-gpu`, `--no-sandbox`, `--disable-dev-shm-usage`) and modern locator/assertion checks.
+- Implement two types of E2E scripts in the `scratchpad` directory:
+  1. A master integration script (`scratchpad/test-master.ts`) verifying all application elements and page transitions sequentially.
+  2. Isolated page/feature scripts (e.g., `scratchpad/test-map.ts`, `scratchpad/test-profile.ts`, etc.) checking individual features.
+- Ensure all test scripts check at least 5 different verification scenarios for each element to vigorously expose layout, visibility, and functional issues.
 
 ## Capabilities
 

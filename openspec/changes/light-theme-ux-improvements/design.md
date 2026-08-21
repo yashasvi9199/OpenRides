@@ -31,7 +31,11 @@ Refactor `DesktopView` and `MobileView` to render pages inline based on `activeV
 Implement dark slate (`bg-slate-900`, `border-slate-800`, `text-white`) overlays for map instruments to maintain high contrast.
 
 ### 5. Playwright E2E Tests (Low-Resource Headless)
-Migrate the E2E verification tests to Playwright using lightweight CLI run commands with sandbox/GPU disabled to conserve target memory and CPU. Use native assertions for elements rendering, positions, and contents.
+Migrate the E2E verification tests to Playwright using lightweight CLI run commands with sandbox/GPU disabled to conserve target memory and CPU.
+We will implement two separate scripts:
+1. `scratchpad/test-master.ts`: Runs a master E2E test verifying all application elements and page transitions sequentially.
+2. Individual test scripts (e.g. `scratchpad/test-map.ts`, `scratchpad/test-profile.ts`) checking individual pages.
+Each test case SHALL vigorously evaluate elements by executing at least 5 verification scenarios (e.g., presence, visibility, typography weight, bounds clipping, content alignment, and interactive state triggers).
 
 ## Risks / Trade-offs
 
