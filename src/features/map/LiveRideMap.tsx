@@ -1,3 +1,4 @@
+// * LiveRideMap Component: Leaflet map canvas rendering.
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import { RideSession, MapTileLayerType, GeoPoint } from '../../shared/types';
