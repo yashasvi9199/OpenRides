@@ -37,6 +37,29 @@ async function runTests(): Promise<void> {
       }
       console.log(`[PASS] Page title verified: "${title}"`);
 
+      // Assertion 1.1: Light Mode Styling
+      console.log('Verifying Light Mode styling...');
+      const isLightMode: boolean = await page.evaluate(() => {
+        const htmlClass = document.documentElement.classList.contains('light');
+        const bodyBgColor = window.getComputedStyle(document.body).backgroundColor;
+        return htmlClass || bodyBgColor === 'rgb(248, 250, 252)' || bodyBgColor === 'rgb(250, 250, 250)' || bodyBgColor === 'rgb(255, 255, 255)';
+      });
+      if (!isLightMode) {
+        throw new Error('Application is not in Light Mode');
+      }
+      console.log('[PASS] Light Mode styling verified.');
+
+      // Assertion 1.2: MapLibre Canvas Container
+      console.log('Verifying MapLibre WebGL canvas...');
+      const maplibreCanvasExists: boolean = await page.evaluate(() => {
+        const container = document.querySelector('.maplibregl-map');
+        return container !== null;
+      });
+      if (!maplibreCanvasExists) {
+        throw new Error('MapLibre GL WebGL container element not found');
+      }
+      console.log('[PASS] MapLibre GL WebGL container element verified.');
+
       // Assertion 2: Desktop Sub-Nav items
       console.log('Verifying Desktop-specific Sub-Nav items...');
       const subNavExists: boolean = await page.evaluate(() => {
