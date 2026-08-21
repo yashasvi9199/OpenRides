@@ -18,6 +18,7 @@ export interface CommonViewProps {
   isHistoryModalOpen: boolean;
   setIsHistoryModalOpen: (open: boolean) => void;
   setIsPublicEmergencyViewActive: (active: boolean) => void;
+  setActiveView: (view: string) => void;
 
   handleRoleChange: (newRole: UserRole) => void;
   handleManualRefresh: () => void;
