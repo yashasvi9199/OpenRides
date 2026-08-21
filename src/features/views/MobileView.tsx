@@ -6,13 +6,15 @@ import { LiveRideMap } from '../map/LiveRideMap';
 import { LiveTelemetryOverlay } from '../ride/LiveTelemetryOverlay';
 import { RideController } from '../ride/RideController';
 import { GroupRidersList } from '../ride/GroupRidersList';
-import { GroupRideModal } from '../ride/GroupRideModal';
 import { GroupRiderApprovalModal } from '../ride/GroupRiderApprovalModal';
 import { CrashDetectionBanner } from '../ride/CrashDetectionBanner';
-import { EmergencyQRModal } from '../sos/EmergencyQRModal';
+import { EmergencyQRModal, EmergencyQRModalContent } from '../sos/EmergencyQRModal';
 import { MedicalProfileEditor } from '../sos/MedicalProfileEditor';
-import { RideHistoryModal } from '../ride/RideHistoryModal';
+import { RideHistoryModal, RideHistoryModalContent } from '../ride/RideHistoryModal';
+import { GroupRideModal, GroupRideModalContent } from '../ride/GroupRideModal';
 import { FamilyDashboard } from '../auth/FamilyDashboard';
+import { Card } from '../../shared/components/Card';
+import { History, Users, QrCode } from 'lucide-react';
 
 // * MobileView layout: optimised for one-handed operation and smaller display sizes.
 export const MobileView: React.FC<CommonViewProps> = ({
