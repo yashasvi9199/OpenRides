@@ -1,6 +1,6 @@
 ## 1. Modular Sizing Layout & Utilities Setup
 
-- [ ] 1.1 Define CSS variables and clamp-based styling classes in `src/index.css` for dynamic fonts, margins, and padding.
+- [x] 1.1 Define CSS variables and clamp-based styling classes in `src/index.css` for dynamic fonts, margins, and padding.
 - [ ] 1.2 Implement type definitions or imports required for Desktop/Mobile views.
 
 ## 2. Separate View Implementations
