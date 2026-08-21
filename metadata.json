@@ -1,0 +1,10 @@
+{
+  "name": "MotoGuard - Free Bike Rider Safety & Emergency Tracking",
+  "description": "100% Free bike rider safety app with live telemetry, group ride sync, crash detection, public emergency QR medical cards, and family tracking.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
