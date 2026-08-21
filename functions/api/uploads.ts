@@ -1,3 +1,4 @@
+// * Cloudflare Pages Function: Handles secure multipart R2 uploads with magic number verification.
 import { z } from 'zod';
 
 export interface Env {
