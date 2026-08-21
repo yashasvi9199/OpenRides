@@ -1,3 +1,4 @@
+// * Medical profile form editor interface.
 import React, { useState } from 'react';
 import { UserProfile, EmergencyContact } from '../../shared/types';
 import { Card } from '../../shared/components/Card';
