@@ -49,7 +49,7 @@ export const BottomNav: React.FC<BottomNavProps> = React.memo(({
   ];
 
   return (
-    <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-lg border-t border-slate-800/90 px-2 py-2 flex items-center justify-around">
+    <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-lg border-t border-slate-200 px-2 py-2 flex items-center justify-around">
       {tabs.map((tab) => {
         const isActive = activeView === tab.id;
         return (
@@ -57,7 +57,7 @@ export const BottomNav: React.FC<BottomNavProps> = React.memo(({
             key={tab.id}
             onClick={() => onViewChange(tab.id)}
             className={`relative flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all cursor-pointer ${
-              isActive ? 'text-cyan-400 font-bold' : 'text-slate-400 hover:text-slate-200'
+              isActive ? 'text-cyan-600 font-bold' : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             <div className="relative">
@@ -69,7 +69,7 @@ export const BottomNav: React.FC<BottomNavProps> = React.memo(({
               )}
             </div>
             <span className="text-[10px] tracking-tight">{tab.label}</span>
-            {isActive && <span className="w-1 h-1 rounded-full bg-cyan-400 -mt-0.5" />}
+            {isActive && <span className="w-1 h-1 rounded-full bg-cyan-600 -mt-0.5" />}
           </button>
         );
       })}
