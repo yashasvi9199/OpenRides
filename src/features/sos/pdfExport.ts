@@ -1,3 +1,4 @@
+// * PDF Exporter helper script.
 import { jsPDF } from 'jspdf';
 import { UserProfile } from '../../shared/types';
 import { formatDate } from '../../shared/utils/formatters';
