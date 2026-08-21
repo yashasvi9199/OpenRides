@@ -1,3 +1,4 @@
+// * Ride logs history panel.
 import React from 'react';
 import { Modal } from '../../shared/components/Modal';
 import { Card } from '../../shared/components/Card';
