@@ -1,8 +1,10 @@
 import { createServer } from 'vite';
 import puppeteer, { Browser, Page } from 'puppeteer';
 
+// * test-ui.ts: Programmatic E2E UI testing suite utilising headless Chromium and programmatically managed Vite dev server.
 async function runTests(): Promise<void> {
   console.log('Starting Vite server programmatically...');
+  // ! Warning: Vite server must run on localhost:3000 to match configuration bindings.
   const server = await createServer({
     configFile: './vite.config.ts',
     server: { port: 3000, host: 'localhost' },
@@ -108,6 +110,7 @@ async function runTests(): Promise<void> {
   }
 }
 
+// ? Should we extract this to a separate testing workflow in git actions?
 runTests().catch((error: unknown) => {
   console.error('Global check failed:', error);
   process.exit(1);
