@@ -32,6 +32,9 @@ async function runTests(): Promise<void> {
 
       // Assertion 1: Title
       const title: string = await page.title();
+      if (!title.includes('OpenRides')) {
+        throw new Error(`Page title does not contain OpenRides: "${title}"`);
+      }
       console.log(`[PASS] Page title verified: "${title}"`);
 
       // Assertion 2: Desktop Sub-Nav items
