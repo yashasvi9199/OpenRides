@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 // * Import the MapLibre web worker inline to prevent browser caching/network corruptions (NS_ERROR_CORRUPTED_CONTENT)
-import MaplibreWorker from 'maplibre-gl/dist/maplibre-gl-csp-worker?worker&inline';
+import MaplibreWorker from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&inline';
 
 // * Register custom worker provider construct dynamically before map canvas mounting
 maplibregl.config.WORKER_PROVIDER = {
