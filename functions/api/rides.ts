@@ -3,6 +3,7 @@ import { z } from 'zod';
 
 export interface Env {
   DB: D1Database;
+  CACHE?: KVNamespace;
 }
 
 const QuerySchema = z.object({
@@ -29,9 +30,34 @@ export const onRequestGet = async (context: { request: Request; env: Env }) => {
 
     const params = result.data;
     if (params.id) {
-      const ride = await env.DB.prepare('SELECT * FROM rides WHERE id = ?')
-        .bind(params.id)
-        .first();
+      // * Cache-Aside strategy: Query single ride telemetry from KV namespace binding first
+      let ride: any = null;
+      const cacheKey = `ride:${params.id}`;
+      if (env.CACHE) {
+        try {
+          const cachedRide = await env.CACHE.get(cacheKey);
+          if (cachedRide) {
+            ride = JSON.parse(cachedRide);
+          }
+        } catch (e) {
+          console.debug('KV cache read fail-open:', e);
+        }
+      }
+
+      if (!ride) {
+        ride = await env.DB.prepare('SELECT * FROM rides WHERE id = ?')
+          .bind(params.id)
+          .first();
+
+        if (ride && env.CACHE) {
+          try {
+            // Cache with mandatory 5 minutes (300s) TTL, namespaced using UUID
+            await env.CACHE.put(cacheKey, JSON.stringify(ride), { expirationTtl: 300 });
+          } catch (e) {
+            console.debug('KV cache write fail-open:', e);
+          }
+        }
+      }
 
       if (!ride) {
         return new Response(JSON.stringify({ error: 'Ride not found' }), {
