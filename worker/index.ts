@@ -1,3 +1,4 @@
+// * Cloudflare Worker: Entry point for user registration, authentication, and security headers.
 import { z } from 'zod';
 import { checkTokenBucketLimit, checkFixedWindowLimit } from './rateLimiter';
 
