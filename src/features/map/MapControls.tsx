@@ -1,3 +1,4 @@
+// * Map Controls layout buttons.
 import React, { useState } from 'react';
 import {
   RotateCw,
