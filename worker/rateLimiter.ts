@@ -1,3 +1,4 @@
+// * Rate Limiter: In-memory store checking for API access boundaries.
 export interface RateLimitResult {
   allowed: boolean;
   retryAfterSeconds: number;
