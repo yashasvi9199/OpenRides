@@ -122,14 +122,14 @@ export const GroupRideModal: React.FC<GroupRideModalProps> = ({
               </div>
 
               <p className="text-xs text-slate-400 max-w-sm">
-                Have other riders enter this code in their MotoGuard app or scan the QR below. You will receive an approval prompt before they can view your live telemetry.
+                Have other riders enter this code in their OpenRides app or scan the QR below. You will receive an approval prompt before they can view your live telemetry.
               </p>
             </div>
 
             {/* QR Code for Fast Join */}
             <div className="bg-white p-3 rounded-2xl shadow-xl flex flex-col items-center">
               <QRCodeSVG
-                value={`motoguard://join/${rideCode}`}
+                value={`openrides://join/${rideCode}`}
                 size={140}
                 level="H"
                 includeMargin={false}
