@@ -45,15 +45,15 @@ export const RideController: React.FC<RideControllerProps> = React.memo(({
   const isSOS = session.status === 'sos';
 
   return (
-    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-slate-900/90 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-slate-800 shadow-2xl">
+    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white border border-slate-200 p-3 sm:p-4 rounded-2xl shadow-xl">
       {/* Primary Ride Start / Pause / Stop Controls */}
-      <div className="flex items-center gap-2 flex-1">
+      <div className="flex items-center gap-1.5 flex-1 w-full overflow-x-auto pb-1 sm:pb-0">
         {isIdle ? (
           <Button
             variant="primary"
-            size="lg"
-            className="flex-1 sm:flex-none sm:min-w-[200px]"
-            leftIcon={<Play className="w-5 h-5 fill-current" />}
+            size="md"
+            className="flex-1 sm:flex-none sm:min-w-[160px] text-xs py-2 text-white"
+            leftIcon={<Play className="w-4 h-4 fill-current" />}
             onClick={onStartRide}
           >
             Start Safety Ride
@@ -97,12 +97,13 @@ export const RideController: React.FC<RideControllerProps> = React.memo(({
         <Button
           variant="outline"
           size="md"
-          leftIcon={<Users className="w-4 h-4 text-cyan-400" />}
+          leftIcon={<Users className="w-4 h-4 text-cyan-700" />}
           onClick={onOpenGroupModal}
           title="Share Secret 6-Digit Code"
+          className="text-xs"
         >
-          <span className="hidden sm:inline">Group Code:</span>
-          <span className="font-mono text-cyan-400 font-bold">#{session.code}</span>
+          <span className="hidden sm:inline text-slate-700">Code:</span>
+          <span className="font-mono text-cyan-700 font-bold">#{session.code}</span>
         </Button>
       </div>
 
@@ -111,7 +112,7 @@ export const RideController: React.FC<RideControllerProps> = React.memo(({
         {/* Ride History */}
         <button
           onClick={onOpenHistory}
-          className="p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl border border-slate-700 transition-colors cursor-pointer"
+          className="p-2.5 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 rounded-xl border border-slate-200 transition-colors cursor-pointer"
           title="Ride History"
           aria-label="View Ride History"
         >
@@ -121,11 +122,11 @@ export const RideController: React.FC<RideControllerProps> = React.memo(({
         {/* Test Simulated Crash Sensor Button */}
         <button
           onClick={onSimulateCrash}
-          className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-amber-500/20 text-slate-300 hover:text-amber-300 border border-slate-700 hover:border-amber-500/40 rounded-xl text-xs font-bold transition-all cursor-pointer"
+          className="flex items-center gap-1.5 px-3 py-2.5 bg-white hover:bg-amber-50 text-slate-700 hover:text-amber-700 border border-slate-200 hover:border-amber-200 rounded-xl text-xs font-bold transition-all cursor-pointer"
           title="Test Gyroscope / G-Force Crash Sensor & 10s Countdown"
         >
-          <Activity className="w-3.5 h-3.5 text-amber-400" />
-          <span className="hidden md:inline">Test Crash Sensor</span>
+          <Activity className="w-3.5 h-3.5 text-amber-500" />
+          <span className="hidden md:inline">Test Crash</span>
         </button>
 
         {/* Emergency SOS Broadcast Button */}
