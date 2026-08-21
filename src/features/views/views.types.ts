@@ -1,6 +1,7 @@
 import { UserProfile, UserRole } from '../auth/auth.types';
 import { RideSession, PendingJoinRequest, CrashAlert } from '../ride/ride.types';
 
+// * CommonViewProps: Shared interface definitions for all Desktop and Mobile presentation components.
 export interface CommonViewProps {
   user: UserProfile;
   currentRole: UserRole;
@@ -11,6 +12,7 @@ export interface CommonViewProps {
   crashAlert: CrashAlert | null;
   history: RideSession[];
   
+  // ? Should we extract modal visibility states to state actions in a context provider instead?
   isGroupModalOpen: boolean;
   setIsGroupModalOpen: (open: boolean) => void;
   isQRModalOpen: boolean;
@@ -28,6 +30,7 @@ export interface CommonViewProps {
   addEmergencyContact: (contact: any) => void;
   removeEmergencyContact: (id: string) => void;
 
+  // ! Warning: Ensure all props have strict type safety mappings to backend databases and wrangler states.
   startRide: (title: string) => void;
   pauseRide: () => void;
   resumeRide: () => void;
