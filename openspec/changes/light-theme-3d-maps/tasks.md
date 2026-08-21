@@ -12,12 +12,12 @@
 ## 3. MapLibre GL 3D Map Implementation
 
 - [x] 3.1 Install maplibre-gl and @types/maplibre-gl.
-- [ ] 3.2 Implement MapLibre GL rendering canvas inside `LiveRideMap.tsx`, handling map cleanup.
-- [ ] 3.3 Add Base Style Switcher supporting Cyber Dark, Satellite, and 3D Elevation Terrain.
-- [ ] 3.4 Enable 3D pitch and bearing camera rotation with smooth inertia.
-- [ ] 3.5 Implement autocomplete search input bar floating over map header querying Photon API.
-- [ ] 3.6 Support checkpoint selection on tap, query route geometry via OSRM, and draw cyan route path on canvas.
-- [ ] 3.7 Render custom markers for host and approved group members.
+- [x] 3.2 Implement MapLibre GL rendering canvas inside `LiveRideMap.tsx`, handling map cleanup.
+- [x] 3.3 Add Base Style Switcher supporting Cyber Dark, Satellite, and 3D Elevation Terrain.
+- [x] 3.4 Enable 3D pitch and bearing camera rotation with smooth inertia.
+- [x] 3.5 Implement autocomplete search input bar floating over map header querying Photon API.
+- [x] 3.6 Support checkpoint selection on tap, query route geometry via OSRM, and draw cyan route path on canvas.
+- [x] 3.7 Render custom markers for host and approved group members.
 
 ## 4. Verification
 
