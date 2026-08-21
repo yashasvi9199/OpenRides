@@ -1,3 +1,4 @@
+// * Custom Leaflet markers definitions.
 import L from 'leaflet';
 import { RideParticipant } from '../../shared/types';
 
