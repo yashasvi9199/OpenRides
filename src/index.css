@@ -1,5 +1,33 @@
 @import "tailwindcss";
 
+:root {
+  /* Fluid Spacing / Gap / Padding variables */
+  --spacing-dynamic: clamp(0.75rem, 1.5vw + 0.25rem, 2rem);
+  --gap-dynamic: clamp(0.75rem, 1.2vw + 0.25rem, 1.75rem);
+  --padding-dynamic: clamp(0.75rem, 2vw + 0.5rem, 3rem);
+
+  /* Fluid Font size variables */
+  --font-dynamic-xs: clamp(0.7rem, 0.8vw + 0.4rem, 0.95rem);
+  --font-dynamic-sm: clamp(0.8rem, 1vw + 0.5rem, 1.15rem);
+  --font-dynamic-base: clamp(0.9rem, 1.2vw + 0.6rem, 1.35rem);
+  --font-dynamic-lg: clamp(1.1rem, 1.5vw + 0.7rem, 1.75rem);
+  --font-dynamic-xl: clamp(1.3rem, 2vw + 0.8rem, 2.25rem);
+  --font-dynamic-2xl: clamp(1.6rem, 2.5vw + 0.9rem, 3rem);
+  --font-dynamic-3xl: clamp(2rem, 3.5vw + 1rem, 4.5rem);
+}
+
+.text-fluid-xs { font-size: var(--font-dynamic-xs); }
+.text-fluid-sm { font-size: var(--font-dynamic-sm); }
+.text-fluid-base { font-size: var(--font-dynamic-base); }
+.text-fluid-lg { font-size: var(--font-dynamic-lg); }
+.text-fluid-xl { font-size: var(--font-dynamic-xl); }
+.text-fluid-2xl { font-size: var(--font-dynamic-2xl); }
+.text-fluid-3xl { font-size: var(--font-dynamic-3xl); }
+
+.p-fluid { padding: var(--padding-dynamic); }
+.gap-fluid { gap: var(--gap-dynamic); }
+.m-fluid { margin: var(--spacing-dynamic); }
+
 @layer base {
   body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
