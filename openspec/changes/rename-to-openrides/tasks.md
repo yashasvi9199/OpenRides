@@ -1,7 +1,7 @@
 ## 1. Static Metadata & HTML Config Updates
 
-- [ ] 1.1 Update application name strings in HTML title, description, and open-graph properties in `index.html`.
-- [ ] 1.2 Update application metadata name in `metadata.json`.
+- [x] 1.1 Update application name strings in HTML title, description, and open-graph properties in `index.html`.
+- [x] 1.2 Update application metadata name in `metadata.json`.
 
 ## 2. Components & PDF Exporter Rebranding
 
