@@ -16,5 +16,5 @@
 
 ## 4. Verification
 
-- [ ] 4.1 Verify layout visual presentation, fonts, and action buttons scale properly using fluid clamp values.
-- [ ] 4.2 Run pre-commit build and lint checks to ensure strict compilation.
+- [x] 4.1 Verify layout visual presentation, fonts, and action buttons scale properly using fluid clamp values.
+- [x] 4.2 Run pre-commit build and lint checks to ensure strict compilation.
