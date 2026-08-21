@@ -199,6 +199,7 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
             altitude: position.coords.altitude || 0,
             heading: heading || 0,
             speed: speed ? speed * 3.6 : 0,
+            accuracy: position.coords.accuracy,
             timestamp: Date.now()
           });
         },
