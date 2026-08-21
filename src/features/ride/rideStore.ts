@@ -175,8 +175,8 @@ export const useRideStore = create<RideState>((set, get) => ({
           },
           (err) => {
             console.debug('Geolocation watch warning (using simulation):', err.message);
-          },
-          { enableHighAccuracy: true, maximumAge: 2000, timeout: 10000 }
+          // * Setup pinpoint accuracy tracking with high accuracy, immediate updates, and 15s timeout
+          { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
         );
       } catch (e) {
         console.debug('Geolocation initial setup exception', e);

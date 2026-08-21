@@ -204,8 +204,8 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
         },
         (error) => {
           console.debug('Failed to query initial location on mount:', error);
-        },
-        { enableHighAccuracy: true, timeout: 5000 }
+        // * Setup pinpoint accuracy tracking with high accuracy, immediate updates, and 15s timeout
+        { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
       );
     }
 
