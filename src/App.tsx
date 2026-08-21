@@ -7,6 +7,7 @@ import { DesktopView } from './features/views/DesktopView';
 import { MobileView } from './features/views/MobileView';
 
 const MainAppContent: React.FC = () => {
+  // * Connect to global store slices for authentication details and live session tracking.
   const {
     currentRole,
     user,
@@ -43,13 +44,14 @@ const MainAppContent: React.FC = () => {
 
   const { success, info } = useToast();
 
+  // ? Should these local states be migrated to a UI slice in Zustand later?
   const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const [isPublicEmergencyViewActive, setIsPublicEmergencyViewActive] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
 
-  // Resize listener for viewport tracking
+  // * Listen to viewport resize. Keeps Desktop vs Mobile views dynamically synced.
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const handleResize = () => {
@@ -61,7 +63,7 @@ const MainAppContent: React.FC = () => {
     }
   }, []);
 
-  // Check URL pathname for /sos/ route on initial mount
+  // ! Alert: Handles direct URL navigation for SOS QR scans before loading dashboard.
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const path = window.location.pathname;
@@ -71,6 +73,7 @@ const MainAppContent: React.FC = () => {
     }
   }, []);
 
+  // * Switch user roles and dispatch toast messages to inform screen transition.
   const handleRoleChange = useCallback(
     (newRole: 'rider' | 'family' | 'guest') => {
       setRole(newRole);
@@ -88,7 +91,7 @@ const MainAppContent: React.FC = () => {
     success('Map Telemetry Refreshed', 'Latest GPS coordinates & wingmen positions synced.');
   }, [manualRefreshPositions, success]);
 
-  // If in public unauthenticated emergency view (e.g. from QR code scan)
+  // * Render the unauthenticated guest view if we are on a direct SOS QR link.
   if (isPublicEmergencyViewActive) {
     return (
       <PublicEmergencyView
@@ -136,6 +139,7 @@ const MainAppContent: React.FC = () => {
     setActiveView,
   };
 
+  // * Render either DesktopView or MobileView based on the tracked viewport width.
   return isDesktop ? (
     <DesktopView {...commonProps} />
   ) : (
