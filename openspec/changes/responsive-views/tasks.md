@@ -11,8 +11,8 @@
 
 ## 3. Dynamic Router and App Integration
 
-- [ ] 3.1 Refactor `src/App.tsx` to handle window/viewport size tracking.
-- [ ] 3.2 Update `src/App.tsx` to dynamically render `DesktopView` or `MobileView` based on viewport breakpoint without duplicate state.
+- [x] 3.1 Refactor `src/App.tsx` to handle window/viewport size tracking.
+- [x] 3.2 Update `src/App.tsx` to dynamically render `DesktopView` or `MobileView` based on viewport breakpoint without duplicate state.
 
 ## 4. Verification
 
