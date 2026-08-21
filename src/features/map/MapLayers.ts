@@ -1,7 +1,8 @@
 // * Map Layers config: MapLibre GL style targets and raster map setups.
 // ? Positron style acts as the main light vector style.
 export const MAP_LAYERS: Record<string, any> = {
-  dark: 'https://tiles.openfreemap.org/styles/dark',
+  // * Carto Dark Matter GL Style JSON config provides high-contrast nighttime styling
+  dark: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
   positron: 'https://tiles.openfreemap.org/styles/positron',
   satellite: {
     version: 8,
