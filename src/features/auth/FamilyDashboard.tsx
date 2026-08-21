@@ -1,3 +1,4 @@
+// * Family Guardian live tracker dashboard.
 import React from 'react';
 import { UserProfile, RideSession } from '../../shared/types';
 import { Card } from '../../shared/components/Card';
