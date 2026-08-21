@@ -138,7 +138,7 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
                     : 'text-slate-300 hover:bg-slate-800'
                 }`}
               >
-                <span>Cyber Dark</span>
+                <span>Vector Dark</span>
                 {currentLayer === 'dark' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
               </button>
               <button
