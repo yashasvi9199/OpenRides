@@ -1,3 +1,4 @@
+// * Navbar Component: Top header navigation bar.
 import React from 'react';
 import { UserRole, UserProfile } from '../types';
 import {
