@@ -9,6 +9,7 @@ import {
   Maximize2,
   Minimize2,
   Compass,
+  Locate,
 } from 'lucide-react';
 import { MapTileLayerType } from '../../shared/types';
 import { formatTimestamp } from '../../shared/utils/formatters';
@@ -23,6 +24,7 @@ interface MapControlsProps {
   lastUpdated: number;
   isAutoFollow: boolean;
   onToggleAutoFollow: () => void;
+  onLocateExact: () => void;
   heading?: number;
 }
 
@@ -36,6 +38,7 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
   lastUpdated,
   isAutoFollow,
   onToggleAutoFollow,
+  onLocateExact,
   heading = 0,
 }) => {
   const [showLayerMenu, setShowLayerMenu] = useState(false);
@@ -89,6 +92,17 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
 
       {/* Control Buttons Cluster */}
       <div className="flex flex-col bg-slate-900/95 backdrop-blur-md rounded-2xl border border-slate-800 p-1.5 shadow-xl gap-1">
+        {/* Locate Exact Precision GPS Button */}
+        <button
+          onClick={onLocateExact}
+          className="px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-850 transition-all flex items-center gap-2 cursor-pointer"
+          title="Locate Exact Precision Coordinates"
+          aria-label="Locate Exact GPS Coordinates"
+        >
+          <Locate className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span className="text-[10px] uppercase font-bold tracking-wider">Locate</span>
+        </button>
+
         {/* Recenter & Follow Toggle */}
         <button
           onClick={() => {
