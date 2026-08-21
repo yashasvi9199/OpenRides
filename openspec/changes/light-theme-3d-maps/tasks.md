@@ -5,9 +5,9 @@
 
 ## 2. Light Theme Integration
 
-- [ ] 2.1 Update `index.html` body and html element classes to use light mode.
-- [ ] 2.2 Refactor layout classes in `DesktopView.tsx` and `MobileView.tsx` to transition background Slate shades from dark to light.
-- [ ] 2.3 Refactor styling variables and borders in `src/index.css` and features styles to light mode.
+- [x] 2.1 Update `index.html` body and html element classes to use light mode.
+- [x] 2.2 Refactor layout classes in `DesktopView.tsx` and `MobileView.tsx` to transition background Slate shades from dark to light.
+- [x] 2.3 Refactor styling variables and borders in `src/index.css` and features styles to light mode.
 
 ## 3. MapLibre GL 3D Map Implementation
 
