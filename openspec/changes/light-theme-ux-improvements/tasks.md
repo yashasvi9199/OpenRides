@@ -18,5 +18,5 @@
 
 ## 4. Verification
 
-- [ ] 4.1 Update E2E test assertions to verify geolocator calls and inline pages.
+- [ ] 4.1 Install playwright packages and rewrite `scratchpad/test-ui.ts` to utilize headless Playwright, low-resource flags (`--disable-gpu`, `--no-sandbox`, `--disable-dev-shm-usage`), modern locators (`page.getByRole`), and native auto-actionability assertions.
 - [ ] 4.2 Run pre-commit checks and verify TypeScript type safety.

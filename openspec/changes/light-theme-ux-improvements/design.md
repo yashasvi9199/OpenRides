@@ -11,6 +11,7 @@ Transitioning to light mode caused contrast regressions. Modals are also less in
 - Redesign overlay controls to use dark tactical theme elements.
 - Inline the MapLibre web worker utilizing Vite inlined web worker queries.
 - Refine font clamp sizes and responsive padding variables.
+- Rewrite E2E test scripts to utilize Playwright in low-resource headless configuration.
 
 **Non-Goals:**
 - Modifying backend server logic or Wrangler bindings.
@@ -28,6 +29,9 @@ Refactor `DesktopView` and `MobileView` to render pages inline based on `activeV
 
 ### 4. Dark Tactical Theme Map Controls
 Implement dark slate (`bg-slate-900`, `border-slate-800`, `text-white`) overlays for map instruments to maintain high contrast.
+
+### 5. Playwright E2E Tests (Low-Resource Headless)
+Migrate the E2E verification tests to Playwright using lightweight CLI run commands with sandbox/GPU disabled to conserve target memory and CPU. Use native assertions for elements rendering, positions, and contents.
 
 ## Risks / Trade-offs
 
