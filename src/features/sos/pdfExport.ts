@@ -24,7 +24,7 @@ export const exportEmergencyCardPDF = (user: UserProfile): void => {
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(11);
-  doc.text('MOTOGUARD EMERGENCY MEDICAL CARD', 52.5, 8, { align: 'center' });
+  doc.text('OPENRIDES EMERGENCY MEDICAL CARD', 52.5, 8, { align: 'center' });
 
   doc.setFontSize(7);
   doc.setFont('helvetica', 'normal');
@@ -118,5 +118,5 @@ export const exportEmergencyCardPDF = (user: UserProfile): void => {
   doc.text(`Generated on ${formatDate(Date.now())} • Scan helmet QR for digital live profile`, 52.5, y + 8, { align: 'center' });
 
   // Save the PDF
-  doc.save(`MotoGuard_Emergency_Card_${user.name.replace(/\s+/g, '_')}.pdf`);
+  doc.save(`OpenRides_Emergency_Card_${user.name.replace(/\s+/g, '_')}.pdf`);
 };
