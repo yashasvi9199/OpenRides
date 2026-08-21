@@ -1,3 +1,4 @@
+// * Active session participants list.
 import React from 'react';
 import { RideParticipant } from '../../shared/types';
 import { Card } from '../../shared/components/Card';
