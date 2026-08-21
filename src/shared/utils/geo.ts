@@ -1,3 +1,4 @@
+// * Geo utilities: location distance and lean angle calculations.
 import { GeoPoint } from '../types';
 
 /**
