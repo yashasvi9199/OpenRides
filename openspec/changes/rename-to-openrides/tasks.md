@@ -10,7 +10,7 @@
 
 ## 3. Store, Keys, and Storage Transition
 
-- [ ] 3.1 Update Zustand `authStore.ts` keys, fallback local storage loaders, and user email schema bindings to use openrides.
+- [x] 3.1 Update Zustand `authStore.ts` keys, fallback local storage loaders, and user email schema bindings to use openrides.
 
 ## 4. Verification
 
