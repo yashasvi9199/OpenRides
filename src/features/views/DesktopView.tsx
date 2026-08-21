@@ -55,7 +55,7 @@ export const DesktopView: React.FC<CommonViewProps> = ({
   setActiveView,
 }) => {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-slate-950">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-cyan-500 selection:text-slate-950">
       {/* ! Warning: Navbar handles SOS triggering; ensure it stays accessible in all viewports. */}
       <Navbar
         currentRole={currentRole}
@@ -69,22 +69,22 @@ export const DesktopView: React.FC<CommonViewProps> = ({
       />
 
       {/* ? Should we extract this sub-nav to a separate component to optimize App.tsx bundle size? */}
-      <div className="flex border-b border-slate-800/80 bg-slate-900/60 px-4 py-2">
+      <div className="flex border-b border-slate-200 bg-white/85 px-4 py-2">
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
           <div className="flex items-center gap-1">
             <button
               onClick={() => handleRoleChange(currentRole)}
               className={`px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold transition-all cursor-pointer ${
                 activeView === 'map'
-                  ? 'bg-slate-800 text-cyan-400 border border-cyan-500/30'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-slate-100 text-cyan-600 border border-cyan-500/25'
+                  : 'text-slate-500 hover:text-slate-900'
               }`}
             >
               Live Ride & Map
             </button>
             <button
               onClick={() => setIsGroupModalOpen(true)}
-              className="relative px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
+              className="relative px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold text-slate-500 hover:text-slate-900 transition-all cursor-pointer flex items-center gap-1.5"
             >
               <span>Group Sync (#{currentSession.code})</span>
               {pendingRequests.length > 0 && (
@@ -95,32 +95,32 @@ export const DesktopView: React.FC<CommonViewProps> = ({
             </button>
             <button
               onClick={() => setIsQRModalOpen(true)}
-              className="px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold text-slate-400 hover:text-white transition-all cursor-pointer flex items-center gap-1"
+              className="px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold text-slate-500 hover:text-slate-900 transition-all cursor-pointer flex items-center gap-1"
             >
-              <QrCode className="w-3.5 h-3.5 text-red-400" />
+              <QrCode className="w-3.5 h-3.5 text-red-500" />
               <span>Helmet QR Sticker</span>
             </button>
             <button
               onClick={() => handleRoleChange('rider')}
               className={`px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
                 activeView === 'profile'
-                  ? 'bg-slate-800 text-cyan-400 border border-cyan-500/30'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-slate-100 text-cyan-600 border border-cyan-500/25'
+                  : 'text-slate-500 hover:text-slate-900'
               }`}
             >
-              <Heart className="w-3.5 h-3.5 text-emerald-400" />
+              <Heart className="w-3.5 h-3.5 text-emerald-500" />
               <span>Medical I.C.E.</span>
             </button>
             <button
               onClick={() => setIsHistoryModalOpen(true)}
-              className="px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold text-slate-400 hover:text-white transition-all cursor-pointer"
+              className="px-3.5 py-1.5 rounded-lg text-fluid-xs font-bold text-slate-500 hover:text-slate-900 transition-all cursor-pointer"
             >
               Ride History Logs
             </button>
           </div>
 
-          <div className="flex items-center gap-2 text-fluid-xs text-slate-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="flex items-center gap-2 text-fluid-xs text-slate-500">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="font-mono">OpenStreetMap Tiles (Zero Cost)</span>
           </div>
         </div>
@@ -187,26 +187,26 @@ export const DesktopView: React.FC<CommonViewProps> = ({
               </div>
 
               {/* TODO: Helmet QR sticker print integration option could be placed here. */}
-              <Card className="flex flex-col justify-between gap-fluid bg-gradient-to-br from-slate-900 to-slate-950 p-fluid">
+              <Card className="flex flex-col justify-between gap-fluid p-fluid">
                 <div>
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                    <span className="text-fluid-xs font-bold uppercase tracking-wider text-red-400 flex items-center gap-1.5">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                    <span className="text-fluid-xs font-bold uppercase tracking-wider text-red-500 flex items-center gap-1.5">
                       <Heart className="w-3.5 h-3.5 fill-current" />
                       <span>Helmet Medical ID</span>
                     </span>
-                    <span className="text-fluid-xs font-mono font-bold text-slate-300">
+                    <span className="text-fluid-xs font-mono font-bold text-slate-700">
                       {user.bloodGroup.split(' ')[0]}
                     </span>
                   </div>
 
-                  <p className="text-fluid-xs text-slate-300 mt-2.5">
-                    Rider: <strong className="text-white">{user.name}</strong>
+                  <p className="text-fluid-xs text-slate-700 mt-2.5">
+                    Rider: <strong className="text-slate-900">{user.name}</strong>
                   </p>
-                  <p className="text-fluid-xs text-slate-400">
+                  <p className="text-fluid-xs text-slate-600">
                     Primary ICE: {user.emergencyContacts[0]?.name || 'Not set'} (
                     {user.emergencyContacts[0]?.phone || 'N/A'})
                   </p>
-                  <p className="text-fluid-xs text-amber-300 mt-1">
+                  <p className="text-fluid-xs text-amber-700 mt-1">
                     Allergies: {user.allergies.join(', ') || 'None recorded'}
                   </p>
                 </div>
