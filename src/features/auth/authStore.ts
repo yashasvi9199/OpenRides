@@ -1,3 +1,4 @@
+// * Zustand Auth store slice.
 import { create } from 'zustand';
 import { UserProfile, UserRole, EmergencyContact } from '../../shared/types';
 import { generatePublicToken } from '../../shared/utils/formatters';
