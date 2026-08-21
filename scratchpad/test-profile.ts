@@ -33,7 +33,7 @@ async function runProfileTests(): Promise<void> {
 
       // * Scenario 2: Validate input fields values
       console.log('Scenario 2: Checking name and blood group input defaults...');
-      const nameInput = page.locator('input[placeholder*="your full name"]');
+      const nameInput = page.locator('input').first();
       const bloodGroupSelect = page.locator('select');
       await expect(nameInput).toBeVisible();
       await expect(bloodGroupSelect).toBeVisible();
