@@ -461,7 +461,6 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
         lastUpdated={session.lastUpdated}
         isAutoFollow={isAutoFollow}
         onToggleAutoFollow={() => setIsAutoFollow(!isAutoFollow)}
-        onLocateExact={requestLocation}
         heading={currentPos.heading || 0}
       />
 

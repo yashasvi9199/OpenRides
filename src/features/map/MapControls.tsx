@@ -24,7 +24,6 @@ interface MapControlsProps {
   lastUpdated: number;
   isAutoFollow: boolean;
   onToggleAutoFollow: () => void;
-  onLocateExact: () => void;
   heading?: number;
 }
 
@@ -38,12 +37,12 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
   lastUpdated,
   isAutoFollow,
   onToggleAutoFollow,
-  onLocateExact,
   heading = 0,
 }) => {
   const [showLayerMenu, setShowLayerMenu] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isRecentering, setIsRecentering] = useState(false);
 
   const handleRefreshClick = () => {
     setIsRefreshing(true);
@@ -91,41 +90,34 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
       </div>
 
       {/* Control Buttons Cluster */}
-      <div className="flex flex-col bg-slate-900/95 backdrop-blur-md rounded-2xl border border-slate-800 p-1.5 shadow-xl gap-1">
-        {/* Locate Exact Precision GPS Button */}
-        <button
-          onClick={onLocateExact}
-          className="px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-850 transition-all flex items-center gap-2 cursor-pointer"
-          title="Locate Exact Precision Coordinates"
-          aria-label="Locate Exact GPS Coordinates"
-        >
-          <Locate className="w-4 h-4 text-emerald-400 shrink-0" />
-          <span className="text-[10px] uppercase font-bold tracking-wider">Locate</span>
-        </button>
-
+      <div className="group flex flex-col bg-slate-900/95 backdrop-blur-md rounded-2xl border border-slate-800 p-1.5 shadow-xl gap-1">
         {/* Recenter & Follow Toggle */}
         <button
           onClick={() => {
             onRecenter();
             onToggleAutoFollow();
+            setIsRecentering(true);
+            setTimeout(() => setIsRecentering(false), 450);
           }}
-          className={`px-3 py-2 rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
-            isAutoFollow
-              ? 'bg-cyan-500 text-slate-950 shadow-md font-bold'
+          className={`px-3 py-2 rounded-xl transition-all flex items-center justify-start cursor-pointer duration-300 ${
+            isRecentering
+              ? 'bg-cyan-500 text-slate-950 font-extrabold shadow-lg shadow-cyan-500/20 active:scale-95'
               : 'text-slate-300 hover:text-white hover:bg-slate-800'
           }`}
           title={isAutoFollow ? 'Auto-centering Enabled' : 'Click to Recenter on Rider'}
           aria-label="Recenter on Rider"
         >
           <LocateFixed className="w-4 h-4 shrink-0" />
-          <span className="text-[10px] uppercase font-bold tracking-wider">Recenter</span>
+          <span className="text-[10px] uppercase font-bold tracking-wider max-w-0 opacity-0 overflow-hidden transition-all duration-300 ease-in-out group-hover:max-w-[100px] group-hover:opacity-100 group-hover:ml-2">
+            Recenter
+          </span>
         </button>
 
         {/* Layer Switcher Button */}
         <div className="relative">
           <button
             onClick={() => setShowLayerMenu(!showLayerMenu)}
-            className={`w-full px-3 py-2 rounded-xl transition-all flex items-center gap-2 cursor-pointer ${
+            className={`w-full px-3 py-2 rounded-xl transition-all flex items-center justify-start cursor-pointer ${
               showLayerMenu
                 ? 'bg-slate-800 text-cyan-400'
                 : 'text-slate-300 hover:text-white hover:bg-slate-800'
@@ -134,12 +126,14 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
             aria-label="Switch Map Layer"
           >
             <Layers className="w-4 h-4 shrink-0" />
-            <span className="text-[10px] uppercase font-bold tracking-wider">Layers</span>
+            <span className="text-[10px] uppercase font-bold tracking-wider max-w-0 opacity-0 overflow-hidden transition-all duration-300 ease-in-out group-hover:max-w-[100px] group-hover:opacity-100 group-hover:ml-2">
+              Layers
+            </span>
           </button>
 
           {/* Layer Flyout Menu */}
           {showLayerMenu && (
-            <div className="absolute right-12 top-0 bg-slate-900 border border-slate-800 rounded-xl p-2 shadow-2xl w-44 z-50 flex flex-col gap-1 animate-in fade-in zoom-in-95">
+            <div className="absolute right-full mr-2 top-0 bg-slate-900 border border-slate-800 rounded-xl p-2 shadow-2xl w-44 z-50 flex flex-col gap-1 animate-in fade-in zoom-in-95">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 px-2 py-1">
                 Map Tiles (100% Free)
               </span>
@@ -203,47 +197,42 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
           )}
         </div>
 
-        {/* Compass Heading Indicator */}
-        <div
-          className="p-2.5 rounded-xl text-slate-400 flex items-center justify-center pointer-events-none"
-          title={`Compass Heading: ${heading}°`}
-        >
-          <Compass
-            className="w-4 h-4 text-cyan-400 transition-transform duration-300"
-            style={{ transform: `rotate(${heading}deg)` }}
-          />
-        </div>
-
         {/* Zoom Controls */}
         <div className="h-px bg-slate-800 my-0.5" />
         <button
           onClick={onZoomIn}
-          className="px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-2 cursor-pointer"
+          className="px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center justify-start cursor-pointer"
           title="Zoom In"
           aria-label="Zoom In"
         >
           <ZoomIn className="w-4 h-4 shrink-0" />
-          <span className="text-[10px] uppercase font-bold tracking-wider">Zoom In</span>
+          <span className="text-[10px] uppercase font-bold tracking-wider max-w-0 opacity-0 overflow-hidden transition-all duration-300 ease-in-out group-hover:max-w-[100px] group-hover:opacity-100 group-hover:ml-2">
+            Zoom In
+          </span>
         </button>
         <button
           onClick={onZoomOut}
-          className="px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-2 cursor-pointer"
+          className="px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center justify-start cursor-pointer"
           title="Zoom Out"
           aria-label="Zoom Out"
         >
           <ZoomOut className="w-4 h-4 shrink-0" />
-          <span className="text-[10px] uppercase font-bold tracking-wider">Zoom Out</span>
+          <span className="text-[10px] uppercase font-bold tracking-wider max-w-0 opacity-0 overflow-hidden transition-all duration-300 ease-in-out group-hover:max-w-[100px] group-hover:opacity-100 group-hover:ml-2">
+            Zoom Out
+          </span>
         </button>
 
         {/* Fullscreen Toggle */}
         <button
           onClick={toggleFullscreen}
-          className="px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-2 cursor-pointer"
+          className="px-3 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition-all flex items-center justify-start cursor-pointer"
           title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen Map'}
           aria-label="Toggle Fullscreen"
         >
           {isFullscreen ? <Minimize2 className="w-4 h-4 shrink-0" /> : <Maximize2 className="w-4 h-4 shrink-0" />}
-          <span className="text-[10px] uppercase font-bold tracking-wider">Size</span>
+          <span className="text-[10px] uppercase font-bold tracking-wider max-w-0 opacity-0 overflow-hidden transition-all duration-300 ease-in-out group-hover:max-w-[100px] group-hover:opacity-100 group-hover:ml-2">
+            Size
+          </span>
         </button>
       </div>
     </div>
