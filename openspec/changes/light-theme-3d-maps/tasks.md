@@ -11,7 +11,7 @@
 
 ## 3. MapLibre GL 3D Map Implementation
 
-- [ ] 3.1 Install maplibre-gl and @types/maplibre-gl.
+- [x] 3.1 Install maplibre-gl and @types/maplibre-gl.
 - [ ] 3.2 Implement MapLibre GL rendering canvas inside `LiveRideMap.tsx`, handling map cleanup.
 - [ ] 3.3 Add Base Style Switcher supporting Cyber Dark, Satellite, and 3D Elevation Terrain.
 - [ ] 3.4 Enable 3D pitch and bearing camera rotation with smooth inertia.
