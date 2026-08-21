@@ -53,7 +53,7 @@ export const MobileView: React.FC<CommonViewProps> = ({
   setActiveView,
 }) => {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-slate-950">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-cyan-500 selection:text-slate-950">
       {/* Top Main Navigation */}
       <Navbar
         currentRole={currentRole}
