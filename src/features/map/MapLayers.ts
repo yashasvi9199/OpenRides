@@ -1,32 +1,49 @@
-// * Map Layers definition configuration.
-export interface TileLayerConfig {
-  id: string;
-  name: string;
-  url: string;
-  attribution: string;
-  maxZoom: number;
-}
-
-export const MAP_LAYERS: Record<string, TileLayerConfig> = {
-  dark: {
-    id: 'dark',
-    name: 'Tactical Dark',
-    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
-    maxZoom: 19,
-  },
-  osm: {
-    id: 'osm',
-    name: 'OpenStreetMap',
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    maxZoom: 19,
+// * Map Layers config: MapLibre GL style targets and raster map setups.
+// ? Positron style acts as the main light vector style.
+export const MAP_LAYERS: Record<string, any> = {
+  dark: 'https://tiles.openfreemap.org/styles/dark',
+  positron: 'https://tiles.openfreemap.org/styles/positron',
+  satellite: {
+    version: 8,
+    sources: {
+      'satellite-tiles': {
+        type: 'raster',
+        tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'],
+        tileSize: 256,
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri'
+      }
+    },
+    layers: [
+      {
+        id: 'satellite-layer',
+        type: 'raster',
+        source: 'satellite-tiles'
+      }
+    ]
   },
   terrain: {
-    id: 'terrain',
-    name: 'Topographic Terrain',
-    url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-    attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, SRTM | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>',
-    maxZoom: 17,
-  },
+    version: 8,
+    sources: {
+      'osm-tiles': {
+        type: 'raster',
+        tiles: ['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'],
+        tileSize: 256,
+        attribution: '&copy; OpenStreetMap'
+      },
+      'terrainSource': {
+        type: 'raster-dem',
+        tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'],
+        encoding: 'terrarium',
+        tileSize: 256
+      }
+    },
+    layers: [
+      {
+        id: 'osm-layer',
+        type: 'raster',
+        source: 'osm-tiles'
+      }
+    ]
+  }
 };
+
