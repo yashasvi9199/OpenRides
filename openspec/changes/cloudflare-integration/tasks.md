@@ -38,7 +38,7 @@
 
 ## 6. Security Headers & Verification
 
-- [ ] 6.1 Implement CORS, CSP, and X-Frame-Options in wrangler configuration/headers.
-- [ ] 6.2 Implement runtime security validations on all inputs.
-- [ ] 6.3 Update docs/GUIDE.md, docs/CHANGELOG.md, and docs/RELEASE.md.
-- [ ] 6.4 Run build, linting, and verify line limits are not violated.
+- [x] 6.1 Implement CORS, CSP, and X-Frame-Options in wrangler configuration/headers.
+- [x] 6.2 Implement runtime security validations on all inputs.
+- [x] 6.3 Update docs/GUIDE.md, docs/CHANGELOG.md, and docs/RELEASE.md.
+- [x] 6.4 Run build, linting, and verify line limits are not violated.
