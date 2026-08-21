@@ -80,3 +80,22 @@ export const createStartMarkerElement = (): HTMLDivElement => {
   return el;
 };
 
+/**
+ * Creates custom blue dot HTML marker element representing the user's current location
+ */
+export const createBlueDotMarkerElement = (): HTMLDivElement => {
+  const el = document.createElement('div');
+  el.className = 'custom-blue-dot-marker';
+
+  el.innerHTML = `
+    <div class="relative flex items-center justify-center -translate-x-1/2 -translate-y-1/2">
+      <!-- Radar Pulse Ring -->
+      <div class="absolute radar-ping bg-blue-500/40 w-8 h-8 rounded-full"></div>
+      <!-- Blue Dot Core -->
+      <div class="absolute w-3.5 h-3.5 bg-blue-500 rounded-full border-2 border-white shadow-md shadow-blue-500/50"></div>
+    </div>
+  `;
+
+  return el;
+};
+
