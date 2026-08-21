@@ -1,3 +1,4 @@
+// * Ride Controller console panel.
 import React, { useState } from 'react';
 import { RideSession } from '../../shared/types';
 import { Button } from '../../shared/components/Button';
