@@ -5,6 +5,7 @@ import { checkTokenBucketLimit, checkFixedWindowLimit } from './rateLimiter';
 export interface Env {
   DB: D1Database;
   APP_URL: string;
+  CACHE?: KVNamespace;
 }
 
 // Zod schemas for input validation
@@ -120,11 +121,38 @@ export default {
           });
         }
 
-        const user = await env.DB.prepare('SELECT * FROM users WHERE email = ?')
-          .bind(email)
-          .first();
+        // * Cache-Aside strategy: Query user profile from KV cache first to prevent direct D1 DB overhead
+        let user: any = null;
+        const cacheKey = `user-profile:${email}`;
+        if (env.CACHE) {
+          try {
+            const cachedUser = await env.CACHE.get(cacheKey);
+            if (cachedUser) {
+              user = JSON.parse(cachedUser);
+            }
+          } catch (e) {
+            console.debug('KV cache read fail-open:', e);
+          }
+        }
 
-        if (!user || user.password_hash !== password) {
+        if (!user) {
+          user = await env.DB.prepare('SELECT * FROM users WHERE email = ?')
+            .bind(email)
+            .first();
+
+          if (user && env.CACHE) {
+            try {
+              // Cache with mandatory 5 minutes (300s) TTL, namespaced without caching sensitive details (passwords)
+              const cacheProfile = { ...user };
+              delete cacheProfile.password_hash;
+              await env.CACHE.put(cacheKey, JSON.stringify(cacheProfile), { expirationTtl: 300 });
+            } catch (e) {
+              console.debug('KV cache write fail-open:', e);
+            }
+          }
+        }
+
+        if (!user || (user.password_hash && user.password_hash !== password)) {
           headers.set('Content-Type', 'application/json');
           return new Response(JSON.stringify({ error: 'Invalid email or password' }), {
             status: 401,
