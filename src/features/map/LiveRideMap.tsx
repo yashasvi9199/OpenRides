@@ -181,7 +181,6 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
       pitchWithRotate: true,
       dragRotate: true,
       maxPitch: 60,
-      antialias: true
     });
 
     mapRef.current = map;
@@ -205,6 +204,7 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
         },
         (error) => {
           console.debug('Failed to query initial location on mount:', error);
+        },
         // * Setup pinpoint accuracy tracking with high accuracy, immediate updates, and 15s timeout
         { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
       );

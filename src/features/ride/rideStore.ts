@@ -13,6 +13,7 @@ import {
   calculateDistanceKm,
 } from '../../shared/utils/geo';
 import { generateSecretGroupCode } from '../../shared/utils/formatters';
+import { KalmanFilter1D } from '../../shared/utils/kalman';
 import {
   requestScreenWakeLock,
   releaseScreenWakeLock,
@@ -106,6 +107,8 @@ const INITIAL_HISTORY: RideHistoryItem[] = [];
 let telemetryInterval: any = null;
 let crashCountdownInterval: any = null;
 let geoWatchId: number | null = null;
+const latKalman = new KalmanFilter1D(0.00005, 0.0002);
+const lngKalman = new KalmanFilter1D(0.00005, 0.0002);
 
 export const useRideStore = create<RideState>((set, get) => ({
   currentSession: createInitialSession(),
@@ -170,11 +173,13 @@ export const useRideStore = create<RideState>((set, get) => ({
               altitude: pos.coords.altitude || 25,
               heading: pos.coords.heading || 135,
               speed: currentSpeedKmh,
+              accuracy: pos.coords.accuracy,
               timestamp: Date.now(),
             });
           },
           (err) => {
             console.debug('Geolocation watch warning (using simulation):', err.message);
+          },
           // * Setup pinpoint accuracy tracking with high accuracy, immediate updates, and 15s timeout
           { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
         );
@@ -321,20 +326,35 @@ export const useRideStore = create<RideState>((set, get) => ({
   },
 
   updateCurrentPosition: (pos: GeoPoint) => {
+    // * 1. Accuracy Gating Threshold Gate: discard/ignore updates with accuracy error larger than 25 meters
+    if (pos.accuracy !== undefined && pos.accuracy > 25) {
+      console.debug(`GPS update discarded due to poor accuracy threshold: ${pos.accuracy}m`);
+      return;
+    }
+
+    // * 2. Kalman filter coordinate smoothing updates
+    const smoothedLat = latKalman.filter(pos.lat);
+    const smoothedLng = lngKalman.filter(pos.lng);
+    const smoothedPos = {
+      ...pos,
+      lat: smoothedLat,
+      lng: smoothedLng
+    };
+
     set((state) => {
       const currentRoute = state.currentSession.route;
       const lastPoint = currentRoute[currentRoute.length - 1];
       let addedDist = 0;
       if (lastPoint) {
-        addedDist = calculateDistanceKm(lastPoint.lat, lastPoint.lng, pos.lat, pos.lng);
+        addedDist = calculateDistanceKm(lastPoint.lat, lastPoint.lng, smoothedPos.lat, smoothedPos.lng);
       }
 
       const updatedParticipants = state.currentSession.participants.map((p) => {
         if (p.role === 'host') {
           return {
             ...p,
-            currentPosition: pos,
-            speedKmh: Math.round(pos.speed || 0),
+            currentPosition: smoothedPos,
+            speedKmh: Math.round(smoothedPos.speed || 0),
             lastPing: Date.now(),
           };
         }
@@ -344,9 +364,9 @@ export const useRideStore = create<RideState>((set, get) => ({
       return {
         currentSession: {
           ...state.currentSession,
-          route: [...currentRoute.slice(-300), pos],
+          route: [...currentRoute.slice(-300), smoothedPos],
           distanceKm: parseFloat((state.currentSession.distanceKm + addedDist).toFixed(2)),
-          currentSpeedKmh: Math.round(pos.speed || 0),
+          currentSpeedKmh: Math.round(smoothedPos.speed || 0),
           participants: updatedParticipants,
           lastUpdated: Date.now(),
         },
