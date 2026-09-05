@@ -58,12 +58,15 @@ export const GroupRideModalContent: React.FC<GroupRideModalContentProps> = ({
     }
   };
 
+  // Dummy mock riders commented out per user request:
+  /*
   const MOCK_RIDERS = [
     { name: 'Jordan Miller', bike: 'Kawasaki Ninja ZX-6R' },
     { name: 'Elena Rostova', bike: 'BMW S1000RR M-Package' },
     { name: 'Marcus Brody', bike: 'Harley-Davidson Low Rider S' },
     { name: 'Chloe Dubois', bike: 'Triumph Street Triple 765' },
   ];
+  */
 
   return (
     <div className="flex flex-col gap-5">
@@ -136,7 +139,7 @@ export const GroupRideModalContent: React.FC<GroupRideModalContentProps> = ({
             </span>
           </div>
 
-          {/* Simulated Incoming Request Trigger (For testing approval workflow in browser) */}
+          {/* Simulated Incoming Request Trigger commented out per user request:
           <div className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-left">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
@@ -164,6 +167,7 @@ export const GroupRideModalContent: React.FC<GroupRideModalContentProps> = ({
               ))}
             </div>
           </div>
+          */}
         </div>
       ) : (
         <form onSubmit={handleJoinSubmit} className="flex flex-col gap-4">
