@@ -22,10 +22,10 @@ const RiderListItem: React.FC<{
     <div
       className={`flex items-center justify-between p-3 rounded-xl border transition-all ${
         isSOS
-          ? 'bg-red-950/40 border-red-500/80 shadow-lg shadow-red-950/50'
+          ? 'bg-red-50 border-red-300 shadow-sm'
           : isHost
-          ? 'bg-cyan-950/20 border-cyan-500/30'
-          : 'bg-slate-800/40 border-slate-800 hover:border-slate-700'
+          ? 'bg-cyan-50/70 border-cyan-200'
+          : 'bg-slate-50 border-slate-200 hover:border-slate-300'
       }`}
     >
       <div className="flex items-center gap-3 min-w-0">
@@ -37,21 +37,21 @@ const RiderListItem: React.FC<{
                 ? 'bg-red-600 border-white text-white animate-bounce'
                 : isHost
                 ? 'bg-cyan-500 border-cyan-300 text-slate-950'
-                : 'bg-slate-700 border-slate-600 text-slate-200'
+                : 'bg-slate-200 border-slate-300 text-slate-800'
             }`}
           >
             {participant.name.slice(0, 2).toUpperCase()}
           </div>
           {/* Live ping dot */}
-          <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 border-2 border-slate-900 rounded-full" />
+          <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full" />
         </div>
 
         {/* Info */}
         <div className="min-w-0">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <p className="text-sm font-bold text-slate-100 truncate">{participant.name}</p>
+            <p className="text-sm font-bold text-slate-900 truncate">{participant.name}</p>
             {isHost && (
-              <span className="text-[10px] font-bold uppercase bg-cyan-500/20 text-cyan-300 px-1.5 py-0.2 rounded border border-cyan-500/30">
+              <span className="text-[10px] font-bold uppercase bg-cyan-100 text-cyan-800 px-1.5 py-0.2 rounded border border-cyan-200">
                 Host
               </span>
             )}
@@ -61,26 +61,26 @@ const RiderListItem: React.FC<{
               </span>
             )}
           </div>
-          <p className="text-xs text-slate-400 truncate">{participant.bikeModel}</p>
+          <p className="text-xs text-slate-600 truncate">{participant.bikeModel}</p>
         </div>
       </div>
 
       {/* Metrics & Quick Call */}
       <div className="flex items-center gap-3">
         <div className="text-right hidden sm:block">
-          <div className="flex items-center justify-end gap-1 text-xs font-mono font-bold text-slate-200">
-            <Gauge className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="flex items-center justify-end gap-1 text-xs font-mono font-bold text-slate-800">
+            <Gauge className="w-3.5 h-3.5 text-cyan-700" />
             <span>{participant.speedKmh} km/h</span>
           </div>
-          <div className="flex items-center justify-end gap-1 text-[10px] text-slate-400 font-mono">
-            <Battery className="w-3 h-3 text-emerald-400" />
+          <div className="flex items-center justify-end gap-1 text-[10px] text-slate-600 font-mono font-medium">
+            <Battery className="w-3.5 h-3.5 text-emerald-600" />
             <span>{participant.batteryPct}%</span>
           </div>
         </div>
 
         <a
           href={`tel:${participant.phone}`}
-          className="p-2 bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-slate-200 rounded-xl transition-all border border-slate-700 active:scale-95"
+          className="p-2 bg-white hover:bg-cyan-500 hover:text-slate-950 text-slate-700 rounded-xl transition-all border border-slate-200 shadow-sm active:scale-95"
           title={`Call ${participant.name}`}
           aria-label={`Call ${participant.name}`}
         >
@@ -98,14 +98,14 @@ export const GroupRidersList: React.FC<GroupRidersListProps> = React.memo(({
 }) => {
   return (
     <Card className="flex flex-col gap-3">
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
+      <div className="flex items-center justify-between border-b border-slate-200 pb-2.5">
         <div className="flex items-center gap-2">
-          <Shield className="w-4 h-4 text-cyan-400" />
-          <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider">
+          <Shield className="w-4 h-4 text-cyan-700" />
+          <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
             Active Group Roster
           </h3>
         </div>
-        <span className="text-xs font-mono font-semibold text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded-full border border-cyan-800/50">
+        <span className="text-xs font-mono font-bold text-cyan-800 bg-cyan-100 px-2 py-0.5 rounded-full border border-cyan-200">
           {participants.length} Synced
         </span>
       </div>
