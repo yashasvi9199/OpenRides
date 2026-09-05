@@ -97,7 +97,6 @@ export const EmergencyQRModalContent: React.FC<EmergencyQRModalContentProps> = (
           variant="primary"
           leftIcon={<Download className="w-4 h-4" />}
           onClick={handleDownloadPDF}
-          className="text-white"
         >
           Download PDF Sheet
         </Button>

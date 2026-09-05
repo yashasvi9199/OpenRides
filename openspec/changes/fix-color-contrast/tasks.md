@@ -1,10 +1,10 @@
 ## 1. Shared Components Contrast Standardization
 
-- [ ] 1.1 Update `StatBadge.tsx` palette with high-contrast light-theme background tints (`bg-*-50`), distinct borders, `text-slate-900` values, and `text-slate-600`/`text-slate-700` labels/units.
-- [ ] 1.2 Update `Button.tsx` variant styles ensuring `outline` and `ghost` use `text-slate-700` and high-contrast hover states, and ensuring `variant="primary"` enforces `text-slate-950 font-bold`.
-- [ ] 1.3 Remove conflicting `text-white` overrides on `variant="primary"` buttons across views (`DesktopView.tsx`, `RideController.tsx`, `MedicalProfileEditor.tsx`, `GroupRideModal.tsx`, `EmergencyQRModal.tsx`).
-- [ ] 1.4 Update `Toast.tsx` icon and badge colors from `-400` to `-600` for clear contrast against white surfaces.
-- [ ] 1.5 Update `BottomNav.tsx` inactive label contrast from `text-slate-500` to `text-slate-600` and active indicators to `text-cyan-700`.
+- [x] 1.1 Update `StatBadge.tsx` palette with high-contrast light-theme background tints (`bg-*-50`), distinct borders, `text-slate-900` values, and `text-slate-600`/`text-slate-700` labels/units.
+- [x] 1.2 Update `Button.tsx` variant styles ensuring `outline` and `ghost` use `text-slate-700` and high-contrast hover states, and ensuring `variant="primary"` enforces `text-slate-950 font-bold`.
+- [x] 1.3 Remove conflicting `text-white` overrides on `variant="primary"` buttons across views (`DesktopView.tsx`, `RideController.tsx`, `MedicalProfileEditor.tsx`, `GroupRideModal.tsx`, `EmergencyQRModal.tsx`).
+- [x] 1.4 Update `Toast.tsx` icon and badge colors from `-400` to `-600` for clear contrast against white surfaces.
+- [x] 1.5 Update `BottomNav.tsx` inactive label contrast from `text-slate-500` to `text-slate-600` and active indicators to `text-cyan-700`.
 
 ## 2. Live Cockpit & Map Overlays Contrast Fixes
 

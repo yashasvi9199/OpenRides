@@ -1,4 +1,13 @@
-# Release Staging Records
+## Release v1.1.1 (Staging Pending)
+
+### Changes
+- **Color Contrast & Typography Remediation**: Resolved camouflaged text, washed-out labels, and low-contrast button states across shared components and cockpit views to guarantee WCAG AA accessibility compliance.
+
+### Artifacts to Deploy
+- Frontend build assets via Cloudflare Pages
+
+### Database Checklist
+- No D1 schema migrations required.
 
 ## Release v1.1.0 (Staging Pending)
 

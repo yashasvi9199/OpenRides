@@ -31,19 +31,19 @@ export const Button: React.FC<ButtonProps> = React.memo(({
 
   const variantStyles = {
     primary:
-      'bg-cyan-500 hover:bg-cyan-400 text-slate-950 focus:ring-cyan-400 focus:ring-offset-slate-900 shadow-cyan-500/20',
+      'bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold focus:ring-cyan-400 focus:ring-offset-slate-900 shadow-cyan-500/20',
     secondary:
       'bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 focus:ring-slate-500 focus:ring-offset-slate-900',
     danger:
       'bg-red-600 hover:bg-red-500 text-white focus:ring-red-500 focus:ring-offset-slate-900 shadow-red-600/30 animate-pulse-subtle',
     success:
-      'bg-emerald-500 hover:bg-emerald-400 text-slate-950 focus:ring-emerald-400 focus:ring-offset-slate-900 shadow-emerald-500/20',
+      'bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold focus:ring-emerald-400 focus:ring-offset-slate-900 shadow-emerald-500/20',
     amber:
-      'bg-amber-500 hover:bg-amber-400 text-slate-950 focus:ring-amber-400 focus:ring-offset-slate-900 shadow-amber-500/20',
+      'bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold focus:ring-amber-400 focus:ring-offset-slate-900 shadow-amber-500/20',
     ghost:
-      'bg-transparent hover:bg-slate-800/80 text-slate-300 hover:text-white focus:ring-slate-500',
+      'bg-transparent hover:bg-slate-100 text-slate-700 hover:text-slate-950 focus:ring-slate-500',
     outline:
-      'bg-transparent border border-slate-700 hover:border-cyan-500/60 text-slate-200 hover:text-cyan-400 focus:ring-cyan-500',
+      'bg-white border border-slate-300 hover:border-cyan-600 text-slate-700 hover:text-cyan-800 hover:bg-cyan-50/50 focus:ring-cyan-500 shadow-sm',
   };
 
   return (

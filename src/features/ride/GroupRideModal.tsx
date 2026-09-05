@@ -214,7 +214,7 @@ export const GroupRideModalContent: React.FC<GroupRideModalContentProps> = ({
             variant="primary"
             size="lg"
             leftIcon={<UserPlus className="w-5 h-5" />}
-            className="mt-2 text-white"
+            className="mt-2"
           >
             Request Access to Ride
           </Button>

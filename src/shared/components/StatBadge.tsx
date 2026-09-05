@@ -19,24 +19,24 @@ export const StatBadge: React.FC<StatBadgeProps> = React.memo(({
   subtext,
 }) => {
   const colorMap = {
-    cyan: 'text-cyan-400 bg-cyan-950/40 border-cyan-800/40',
-    amber: 'text-amber-400 bg-amber-950/40 border-amber-800/40',
-    emerald: 'text-emerald-400 bg-emerald-950/40 border-emerald-800/40',
-    red: 'text-red-400 bg-red-950/40 border-red-800/40',
-    slate: 'text-slate-300 bg-slate-800/60 border-slate-700/60',
+    cyan: 'bg-cyan-50/90 border-cyan-200 text-cyan-800',
+    amber: 'bg-amber-50/90 border-amber-200 text-amber-800',
+    emerald: 'bg-emerald-50/90 border-emerald-200 text-emerald-800',
+    red: 'bg-red-50/90 border-red-200 text-red-800',
+    slate: 'bg-slate-100/90 border-slate-200 text-slate-700',
   };
 
   return (
-    <div className={`flex flex-col p-3 rounded-xl border ${colorMap[variant]} transition-all duration-200`}>
+    <div className={`flex flex-col p-3 rounded-xl border ${colorMap[variant]} transition-all duration-200 shadow-sm`}>
       <div className="flex items-center justify-between gap-1 mb-1">
-        <span className="text-[11px] font-medium tracking-wider uppercase text-slate-400">{label}</span>
-        {icon && <span className="opacity-80">{icon}</span>}
+        <span className="text-[11px] font-bold tracking-wider uppercase text-slate-600">{label}</span>
+        {icon && <span className="opacity-90">{icon}</span>}
       </div>
       <div className="flex items-baseline gap-1">
-        <span className="text-xl sm:text-2xl font-black tracking-tight font-mono text-slate-100">{value}</span>
-        {unit && <span className="text-xs font-semibold text-slate-400 uppercase">{unit}</span>}
+        <span className="text-xl sm:text-2xl font-black tracking-tight font-mono text-slate-900">{value}</span>
+        {unit && <span className="text-xs font-bold text-slate-600 uppercase">{unit}</span>}
       </div>
-      {subtext && <span className="text-[10px] text-slate-500 mt-0.5 truncate">{subtext}</span>}
+      {subtext && <span className="text-[10px] font-medium text-slate-600 mt-0.5 truncate">{subtext}</span>}
     </div>
   );
 });

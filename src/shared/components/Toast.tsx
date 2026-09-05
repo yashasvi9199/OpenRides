@@ -57,10 +57,10 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       <div className="fixed bottom-20 sm:bottom-6 right-4 left-4 sm:left-auto sm:w-96 z-50 flex flex-col gap-2 pointer-events-none">
         {toasts.map((toast) => {
           const typeIcons = {
-            success: <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />,
-            warning: <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />,
-            error: <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />,
-            info: <Info className="w-5 h-5 text-cyan-400 shrink-0" />,
+            success: <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />,
+            warning: <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0" />,
+            error: <AlertCircle className="w-5 h-5 text-red-600 shrink-0" />,
+            info: <Info className="w-5 h-5 text-cyan-700 shrink-0" />,
           };
 
           const typeStyles = {

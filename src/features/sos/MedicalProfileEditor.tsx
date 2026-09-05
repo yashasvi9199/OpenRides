@@ -137,7 +137,6 @@ export const MedicalProfileEditor: React.FC<MedicalProfileEditorProps> = ({
           size="sm"
           leftIcon={<Save className="w-4 h-4" />}
           onClick={handleSaveAll}
-          className="text-white"
         >
           Save Changes
         </Button>

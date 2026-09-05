@@ -52,7 +52,7 @@ export const RideController: React.FC<RideControllerProps> = React.memo(({
           <Button
             variant="primary"
             size="md"
-            className="flex-1 sm:flex-none sm:min-w-[160px] text-xs py-2 text-white"
+            className="flex-1 sm:flex-none sm:min-w-[160px] text-xs py-2"
             leftIcon={<Play className="w-4 h-4 fill-current" />}
             onClick={onStartRide}
           >
