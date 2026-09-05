@@ -1,3 +1,14 @@
+## Release v1.1.2 (Staging Pending)
+
+### Changes
+- **Map Layer & WebGL Canvas Reliability**: Standardized MapLibre raster/vector layers, resolved web worker initialization, added automatic fallback to OpenStreetMap raster tiles, added ResizeObserver, and commented out dummy initial mock participants and mock code.
+
+### Artifacts to Deploy
+- Frontend build assets via Cloudflare Pages
+
+### Database Checklist
+- No D1 schema migrations required.
+
 ## Release v1.1.1 (Staging Pending)
 
 ### Changes
