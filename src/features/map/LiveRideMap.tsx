@@ -2,20 +2,18 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-// * Import the MapLibre web worker inline to prevent browser caching/network corruptions (NS_ERROR_CORRUPTED_CONTENT)
-import MaplibreWorker from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&inline';
+import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 
-// * Register custom worker provider construct dynamically before map canvas mounting
-(maplibregl.config as any).WORKER_PROVIDER = {
-  getWorker() {
-    return new MaplibreWorker();
-  }
-};
+// * Configure MapLibre Web Worker URL via standard asset resolution
+if (typeof window !== 'undefined' && (maplibregl as any).setWorkerUrl) {
+  (maplibregl as any).setWorkerUrl(maplibreWorkerUrl);
+}
+
 import { RideSession, MapTileLayerType, GeoPoint } from '../../shared/types';
-import { MAP_LAYERS } from './MapLayers';
+import { MAP_LAYERS, DEFAULT_MAP_LAYER, OSM_RASTER_STYLE } from './MapLayers';
 import { createRiderMarkerElement, createStartMarkerElement, createBlueDotMarkerElement } from './CustomMarkers';
 import { MapControls } from './MapControls';
-import { Phone, Battery, Gauge, ShieldAlert, Navigation2, Trash2, MapPin } from 'lucide-react';
+import { ShieldAlert, Navigation2, Trash2, MapPin } from 'lucide-react';
 import { formatTimestamp } from '../../shared/utils/formatters';
 import { useRideStore } from '../ride/rideStore';
 import './map.styles.css';
@@ -34,11 +32,10 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
   isFamilyMode = false,
 }) => {
   // * Layer & Map view trackers
-  const [selectedLayer, setSelectedLayer] = useState<MapTileLayerType>('osm');
+  const [selectedLayer, setSelectedLayer] = useState<MapTileLayerType>(DEFAULT_MAP_LAYER);
+  const activeLayerRef = useRef<MapTileLayerType>(DEFAULT_MAP_LAYER);
   const [isAutoFollow, setIsAutoFollow] = useState(true);
-  const [recenterCount, setRecenterCount] = useState(0);
-  const [zoomInCount, setZoomInCount] = useState(0);
-  const [zoomOutCount, setZoomOutCount] = useState(0);
+  const [locationError, setLocationError] = useState(false);
 
   // * Checkpoint & Autocomplete states
   const [checkpointMode, setCheckpointMode] = useState(false);
@@ -57,7 +54,6 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
   const hostParticipant = session.participants.find((p) => p.role === 'host') || session.participants[0];
   const currentPos = hostParticipant?.currentPosition || { lat: 37.7749, lng: -122.4194 };
 
-  const routePolylineCoords: [number, number][] = session.route.map((p) => [p.lat, p.lng]);
   const startPoint = session.route.length > 0 ? session.route[0] : null;
 
   // ! OSRM Routing Fetch API connector
@@ -142,7 +138,6 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
 
   // ? Map Control Button Callbacks
   const handleRecenter = useCallback(() => {
-    setRecenterCount((c) => c + 1);
     if (mapRef.current) {
       mapRef.current.flyTo({
         center: [currentPos.lng, currentPos.lat],
@@ -154,16 +149,12 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
   }, [currentPos]);
 
   const handleZoomIn = useCallback(() => {
-    setZoomInCount((c) => c + 1);
     if (mapRef.current) mapRef.current.zoomIn();
   }, []);
 
   const handleZoomOut = useCallback(() => {
-    setZoomOutCount((c) => c + 1);
     if (mapRef.current) mapRef.current.zoomOut();
   }, []);
-
-  const [locationError, setLocationError] = useState(false);
 
   // * Connect to global tracking store slice
   const { updateCurrentPosition } = useRideStore();
@@ -197,7 +188,6 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
         console.debug('Failed to query precise coordinates:', error);
         setLocationError(true);
       },
-      // * Setup pinpoint accuracy tracking with high accuracy, immediate updates, and 15s timeout
       { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
     );
   }, [updateCurrentPosition]);
@@ -206,11 +196,11 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
-    const styleSource = MAP_LAYERS[selectedLayer] || MAP_LAYERS.positron;
+    const initialStyle = MAP_LAYERS[selectedLayer] || OSM_RASTER_STYLE;
 
     const map = new maplibregl.Map({
       container: mapContainerRef.current,
-      style: styleSource,
+      style: initialStyle,
       center: [currentPos.lng, currentPos.lat],
       zoom: 15,
       pitch: 45,
@@ -222,10 +212,34 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
 
     mapRef.current = map;
 
-    // * Query initial position using Geolocation API
+    // Error fallback listener: if tile style fails, gracefully switch to standard OSM raster
+    map.on('error', (e) => {
+      console.warn('MapLibre error encountered:', e.error);
+      if (e.error && (e as any).sourceId !== 'osm-tiles') {
+        try {
+          map.setStyle(OSM_RASTER_STYLE);
+        } catch (styleErr) {
+          console.error('Failed to set fallback OSM style:', styleErr);
+        }
+      }
+    });
+
+    // ResizeObserver ensures canvas always fills container
+    const resizeObserver = new ResizeObserver(() => {
+      map.resize();
+    });
+    resizeObserver.observe(mapContainerRef.current);
+
+    // Initial resize trigger after mount
+    setTimeout(() => {
+      map.resize();
+    }, 100);
+
+    // Query initial position using Geolocation API
     requestLocation();
 
     return () => {
+      resizeObserver.disconnect();
       if (blueDotMarkerRef.current) {
         blueDotMarkerRef.current.remove();
         blueDotMarkerRef.current = null;
@@ -235,10 +249,15 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
     };
   }, [requestLocation]);
 
-  // * Style Loader & Elevation DEM Source sync
+  // * Layer Switcher Effect
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
+
+    if (activeLayerRef.current === selectedLayer) return;
+    activeLayerRef.current = selectedLayer;
+
+    const targetStyle = MAP_LAYERS[selectedLayer] || OSM_RASTER_STYLE;
 
     const handleStyleLoad = () => {
       if (selectedLayer === 'terrain') {
@@ -250,9 +269,17 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
             tileSize: 256
           });
         }
-        map.setTerrain({ source: 'terrainSource', exaggeration: 1.5 });
+        try {
+          map.setTerrain({ source: 'terrainSource', exaggeration: 1.5 });
+        } catch {
+          // terrain unsupported on current canvas context
+        }
       } else {
-        map.setTerrain(null);
+        try {
+          map.setTerrain(null);
+        } catch {
+          // ignore
+        }
       }
 
       if (checkpoints.length > 0) {
@@ -260,13 +287,9 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
       }
     };
 
-    map.on('style.load', handleStyleLoad);
-    map.setStyle(MAP_LAYERS[selectedLayer] || MAP_LAYERS.positron);
-
-    return () => {
-      map.off('style.load', handleStyleLoad);
-    };
-  }, [selectedLayer]);
+    map.once('style.load', handleStyleLoad);
+    map.setStyle(targetStyle);
+  }, [selectedLayer, checkpoints, currentPos]);
 
   // * Map click handlers inside Checkpoint addition mode
   useEffect(() => {
@@ -278,7 +301,6 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
       const { lng, lat } = e.lngLat;
       const newPoint: GeoPoint = { lat, lng, timestamp: Date.now() };
 
-      // Render a simple HTML pin for checkpoint
       const pinEl = document.createElement('div');
       pinEl.className = 'w-6 h-6 rounded-full bg-cyan-500 border-2 border-white flex items-center justify-center text-white text-[10px] font-bold shadow-lg';
       pinEl.innerHTML = (checkpoints.length + 1).toString();
@@ -356,7 +378,7 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
       }
     });
 
-    // * Render blue dot current position marker
+    // Render blue dot current position marker
     if (blueDotMarkerRef.current) {
       blueDotMarkerRef.current.setLngLat([currentPos.lng, currentPos.lat]);
     } else {
@@ -399,19 +421,19 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
   }, [startPoint]);
 
   return (
-    <div className={`relative rounded-2xl overflow-hidden border border-slate-200 shadow-2xl bg-white ${className}`}>
+    <div className={`relative rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-slate-950 ${className}`}>
       {/* Autocomplete Search input overlay */}
       <div className="absolute top-4 left-4 z-[400] w-[calc(100%-8rem)] max-w-xs sm:max-w-sm pointer-events-auto">
-        <div className="bg-white/95 backdrop-blur-md rounded-2xl border border-slate-200 shadow-lg overflow-hidden">
+        <div className="bg-slate-900/95 backdrop-blur-md rounded-2xl border border-slate-700 shadow-lg overflow-hidden">
           <input
             type="text"
             placeholder="Search destination..."
             value={searchQuery}
             onChange={(e) => handleSearch(e.target.value)}
-            className="w-full px-4 py-2.5 text-xs text-slate-800 bg-transparent focus:outline-none placeholder:text-slate-500 font-sans"
+            className="w-full px-4 py-2.5 text-xs text-slate-100 bg-transparent focus:outline-none placeholder:text-slate-400 font-sans"
           />
           {searchResults.length > 0 && (
-            <div className="border-t border-slate-100 max-h-48 overflow-y-auto bg-white">
+            <div className="border-t border-slate-700 max-h-48 overflow-y-auto bg-slate-900">
               {searchResults.map((result, idx) => (
                 <button
                   key={idx}
@@ -428,9 +450,9 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
                     setSearchResults([]);
                     setSearchQuery(result.properties.name || '');
                   }}
-                  className="w-full text-left px-4 py-2 hover:bg-slate-50 text-[11px] text-slate-600 border-b border-slate-50 last:border-0 block truncate"
+                  className="w-full text-left px-4 py-2 hover:bg-slate-800 text-[11px] text-slate-300 border-b border-slate-800 last:border-0 block truncate"
                 >
-                  <strong className="text-slate-800">{result.properties.name}</strong>
+                  <strong className="text-slate-100">{result.properties.name}</strong>
                   {result.properties.city && ` • ${result.properties.city}`}
                   {result.properties.country && ` • ${result.properties.country}`}
                 </button>
@@ -447,7 +469,7 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
           className={`flex items-center gap-1.5 px-3 py-2 border rounded-xl font-bold text-xs transition-all cursor-pointer shadow-md ${
             checkpointMode
               ? 'bg-cyan-500 text-slate-950 border-cyan-400 font-extrabold'
-              : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200'
+              : 'bg-slate-900/90 hover:bg-slate-800 text-slate-200 border-slate-700'
           }`}
         >
           <Navigation2 className="w-3.5 h-3.5" />
@@ -457,7 +479,7 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
         {checkpoints.length > 0 && (
           <button
             onClick={clearRoute}
-            className="flex items-center justify-center p-2 bg-white hover:bg-red-50 text-red-500 border border-slate-200 hover:border-red-200 rounded-xl transition-all shadow-md cursor-pointer"
+            className="flex items-center justify-center p-2 bg-slate-900/90 hover:bg-red-950/50 text-red-400 border border-slate-700 hover:border-red-500/50 rounded-xl transition-all shadow-md cursor-pointer"
             title="Clear route checkpoints"
           >
             <Trash2 className="w-4 h-4" />
@@ -488,45 +510,44 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
       )}
 
       {isFamilyMode && session.status !== 'sos' && (
-        <div className="absolute top-4 right-20 z-[400] bg-white/90 backdrop-blur-md text-slate-700 px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 border border-slate-200 shadow-lg">
+        <div className="absolute top-4 right-20 z-[400] bg-slate-900/90 backdrop-blur-md text-slate-200 px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-2 border border-slate-700 shadow-lg">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
           <span>Live Family Guardian Tracking</span>
         </div>
       )}
 
-      {/* MapLibre Canvas Container / Location Error Alert Overlay */}
-      {locationError ? (
-        <div className="w-full h-full min-h-[300px] flex flex-col items-center justify-center bg-slate-950 p-6 text-center text-white z-[300] relative">
-          <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-3xl mb-4 text-red-400 animate-bounce">
-            <MapPin className="w-8 h-8" />
+      {/* Map Canvas Container - always mounted */}
+      <div ref={mapContainerRef} className="w-full h-full min-h-[460px] sm:min-h-[580px] relative" />
+
+      {/* Non-destructive Location Notice Overlay */}
+      {locationError && (
+        <div className="absolute top-18 right-4 z-[400] max-w-xs bg-slate-900/95 backdrop-blur-md p-3 rounded-2xl border border-amber-500/40 shadow-xl flex items-center gap-2.5 text-white">
+          <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
+          <div className="text-[11px] leading-tight text-slate-300">
+            <span className="font-bold text-amber-300 block">Using Default Location</span>
+            Enable location services to track real coordinates.
           </div>
-          <h3 className="text-sm font-black uppercase tracking-wider text-slate-100 mb-1">Location Services Required</h3>
-          <p className="text-xs text-slate-400 max-w-xs mb-6 font-sans">
-            Unable to determine your precise location. Please enable location services in your browser settings to track safety telemetry.
-          </p>
           <button
             onClick={requestLocation}
-            className="px-5 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-xl font-bold text-xs uppercase tracking-wider shadow-lg shadow-cyan-500/20 active:scale-95 transition-all cursor-pointer"
+            className="px-2 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 text-[10px] font-bold rounded-lg shrink-0 cursor-pointer"
           >
-            Enable Location Services
+            Retry
           </button>
         </div>
-      ) : (
-        <div ref={mapContainerRef} className="w-full h-full" />
       )}
 
       {/* Map Bottom Telemetry Ticker */}
-      <div className="absolute bottom-3 left-3 right-3 sm:right-auto z-[400] bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-200 shadow-xl flex items-center justify-between sm:justify-start gap-4">
+      <div className="absolute bottom-3 left-3 right-3 sm:right-auto z-[400] bg-slate-900/95 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-700 shadow-xl flex items-center justify-between sm:justify-start gap-4">
         <div className="flex items-center gap-2">
           <div className={`w-2.5 h-2.5 rounded-full ${session.status === 'active' ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
-          <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">
+          <span className="text-xs font-bold text-slate-200 uppercase tracking-wide">
             {session.status === 'active' ? 'Live Telemetry' : session.status}
           </span>
         </div>
-        <div className="text-xs text-slate-600 font-mono font-medium">
+        <div className="text-xs text-slate-300 font-mono font-medium">
           {session.participants.length} Active Riders
         </div>
-        <div className="hidden sm:block text-xs text-cyan-700 font-mono font-bold">
+        <div className="hidden sm:block text-xs text-cyan-400 font-mono font-bold">
           Heading: {currentPos.heading || 0}°
         </div>
       </div>
