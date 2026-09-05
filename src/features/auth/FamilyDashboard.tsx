@@ -61,17 +61,17 @@ export const FamilyDashboard: React.FC<FamilyDashboardProps> = ({
 
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] uppercase tracking-widest font-black text-cyan-400 bg-cyan-950 px-2 py-0.5 rounded border border-cyan-800">
-                  Guardian Guardian View
+                <span className="text-[10px] uppercase tracking-widest font-black text-cyan-800 bg-cyan-100 px-2 py-0.5 rounded border border-cyan-200">
+                  Guardian View
                 </span>
-                <span className="text-xs text-slate-400">
+                <span className="text-xs text-slate-600 font-medium">
                   Last Sync: {formatTimestamp(session.lastUpdated)}
                 </span>
               </div>
-              <h2 className="text-xl font-black text-white mt-0.5">
+              <h2 className="text-xl font-black text-slate-900 mt-0.5">
                 Monitoring Rider: {user.name}
               </h2>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-slate-600">
                 🏍️ {user.bikeModel} • License {user.bikeNumber}
               </p>
             </div>
@@ -98,7 +98,7 @@ export const FamilyDashboard: React.FC<FamilyDashboardProps> = ({
         </div>
 
         {/* Live Status Banner */}
-        <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between">
+        <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span
               className={`w-3 h-3 rounded-full ${
@@ -109,7 +109,7 @@ export const FamilyDashboard: React.FC<FamilyDashboardProps> = ({
                   : 'bg-amber-400'
               }`}
             />
-            <span className="text-xs font-bold text-slate-200">
+            <span className="text-xs font-bold text-slate-800">
               {isSOS
                 ? '🚨 EMERGENCY SOS TRIGGERED BY RIDER'
                 : isMoving
@@ -122,7 +122,7 @@ export const FamilyDashboard: React.FC<FamilyDashboardProps> = ({
 
           <button
             onClick={handlePingRider}
-            className="text-xs text-cyan-400 hover:underline flex items-center gap-1 cursor-pointer font-semibold"
+            className="text-xs text-cyan-700 hover:text-cyan-900 hover:underline flex items-center gap-1 cursor-pointer font-bold"
           >
             <Bell className="w-3.5 h-3.5" />
             <span>Send Check-in Buzz</span>
