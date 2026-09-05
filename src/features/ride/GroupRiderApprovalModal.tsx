@@ -26,7 +26,7 @@ export const GroupRiderApprovalModal: React.FC<GroupRiderApprovalModalProps> = R
       isOpen={true}
       onClose={() => onReject(currentRequest.id)}
       title={
-        <div className="flex items-center gap-2 text-cyan-400">
+        <div className="flex items-center gap-2 text-cyan-700">
           <ShieldCheck className="w-5 h-5" />
           <span>Rider Join Request</span>
         </div>
@@ -35,34 +35,34 @@ export const GroupRiderApprovalModal: React.FC<GroupRiderApprovalModalProps> = R
       maxWidth="md"
     >
       <div className="flex flex-col gap-4">
-        <div className="bg-cyan-950/30 border border-cyan-500/30 rounded-xl p-4 flex items-start gap-3">
-          <div className="w-12 h-12 rounded-full bg-cyan-500 text-slate-950 font-black text-lg flex items-center justify-center shrink-0">
+        <div className="bg-cyan-50 border border-cyan-200 rounded-xl p-4 flex items-start gap-3">
+          <div className="w-12 h-12 rounded-full bg-cyan-500 text-slate-950 font-black text-lg flex items-center justify-center shrink-0 shadow-sm">
             {currentRequest.riderName.slice(0, 2).toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">
-            <h4 className="font-bold text-base text-slate-100">{currentRequest.riderName}</h4>
-            <div className="flex items-center gap-1.5 text-xs text-cyan-300 mt-0.5">
+            <h4 className="font-bold text-base text-slate-900">{currentRequest.riderName}</h4>
+            <div className="flex items-center gap-1.5 text-xs text-cyan-800 font-semibold mt-0.5">
               <Bike className="w-3.5 h-3.5" />
               <span>{currentRequest.bikeModel}</span>
             </div>
-            <div className="flex items-center gap-1.5 text-xs text-slate-400 mt-1">
+            <div className="flex items-center gap-1.5 text-xs text-slate-600 mt-1">
               <Phone className="w-3.5 h-3.5" />
               <span>{currentRequest.phone}</span>
             </div>
-            <div className="flex items-center gap-1.5 text-[11px] text-slate-500 mt-1">
+            <div className="flex items-center gap-1.5 text-[11px] text-slate-600 mt-1">
               <Clock className="w-3.5 h-3.5" />
               <span>Requested at {formatTimestamp(currentRequest.requestedAt)}</span>
             </div>
           </div>
         </div>
 
-        <p className="text-xs text-slate-300 leading-relaxed bg-slate-800/40 p-3 rounded-xl border border-slate-700/50">
+        <p className="text-xs text-slate-700 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-200">
           Approving will grant this rider access to your live telemetry, route coordinates, and sync their beacon onto the group map.
         </p>
 
         {/* Queued count if multiple */}
         {pendingRequests.length > 1 && (
-          <p className="text-[11px] text-amber-400 font-semibold text-center">
+          <p className="text-[11px] text-amber-700 font-bold text-center">
             +{pendingRequests.length - 1} more pending in queue
           </p>
         )}
