@@ -2,11 +2,15 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
 
-// * Configure MapLibre Web Worker URL via standard asset resolution
+// * Configure MapLibre Web Worker URL via standard ECMAScript URL resolution
 if (typeof window !== 'undefined' && (maplibregl as any).setWorkerUrl) {
-  (maplibregl as any).setWorkerUrl(maplibreWorkerUrl);
+  try {
+    const workerUrl = new URL('maplibre-gl/dist/maplibre-gl-worker.mjs', import.meta.url).href;
+    (maplibregl as any).setWorkerUrl(workerUrl);
+  } catch {
+    // Fall back to MapLibre default bundled worker resolution
+  }
 }
 
 import { RideSession, MapTileLayerType, GeoPoint } from '../../shared/types';
