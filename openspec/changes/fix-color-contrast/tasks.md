@@ -16,12 +16,12 @@
 
 ## 3. Family Dashboard, Group Roster & Modals
 
-- [ ] 3.1 Fix `FamilyDashboard.tsx` highlight card typography by replacing `text-white`, `text-slate-300`, and `text-slate-200` with `text-slate-900`, `text-slate-700`, and `text-slate-800`.
-- [ ] 3.2 Refactor `GroupRidersList.tsx` container header and rider row items from translucent dark mode (`bg-slate-800/40`, `text-slate-100`) to crisp light cards (`bg-slate-50`, `border-slate-200`, `text-slate-900`).
-- [ ] 3.3 Update `GroupRiderApprovalModal.tsx` modal title from `text-cyan-400` to `text-cyan-700` and replace dark body box with high-contrast light dialog styling.
-- [ ] 3.4 Update `GroupRideModal.tsx` tabs, secret ride code badge, and simulation panel typography to eliminate low-contrast labels.
-- [ ] 3.5 Update `RideHistoryModal.tsx` modal title from `text-cyan-400` to `text-cyan-700` and ensure history metrics have strong contrast against card backgrounds.
-- [ ] 3.6 Refactor `MedicalProfileEditor.tsx` section headings, form labels, and tag pills to enforce high-contrast slate text.
+- [x] 3.1 Fix `FamilyDashboard.tsx` highlight card typography by replacing `text-white`, `text-slate-300`, and `text-slate-200` with `text-slate-900`, `text-slate-700`, and `text-slate-800`.
+- [x] 3.2 Refactor `GroupRidersList.tsx` container header and rider row items from translucent dark mode (`bg-slate-800/40`, `text-slate-100`) to crisp light cards (`bg-slate-50`, `border-slate-200`, `text-slate-900`).
+- [x] 3.3 Update `GroupRiderApprovalModal.tsx` modal title from `text-cyan-400` to `text-cyan-700` and replace dark body box with high-contrast light dialog styling.
+- [x] 3.4 Update `GroupRideModal.tsx` tabs, secret ride code badge, and simulation panel typography to eliminate low-contrast labels.
+- [x] 3.5 Update `RideHistoryModal.tsx` modal title from `text-cyan-400` to `text-cyan-700` and ensure history metrics have strong contrast against card backgrounds.
+- [x] 3.6 Refactor `MedicalProfileEditor.tsx` section headings, form labels, and tag pills to enforce high-contrast slate text.
 
 ## 4. Verification & Contrast Validation
 
