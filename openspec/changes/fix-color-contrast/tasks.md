@@ -25,5 +25,5 @@
 
 ## 4. Verification & Contrast Validation
 
-- [ ] 4.1 Run TypeScript type check (`pnpm run build` or `pnpm tsc --noEmit`) to verify zero type regressions.
-- [ ] 4.2 Validate contrast ratios across all modified components against WCAG AA standards (>= 4.5:1 for regular text, >= 3:1 for large text).
+- [x] 4.1 Run TypeScript type check (`pnpm run build` or `pnpm tsc --noEmit`) to verify zero type regressions.
+- [x] 4.2 Validate contrast ratios across all modified components against WCAG AA standards (>= 4.5:1 for regular text, >= 3:1 for large text).
