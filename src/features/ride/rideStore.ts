@@ -69,21 +69,28 @@ interface RideState {
 // Initial default session
 const createInitialSession = (): RideSession => ({
   id: 'ride_' + Math.random().toString(36).substring(2, 9),
-  code: '748291',
-  hostId: 'usr_rider_01',
-  hostName: 'Alex "Apex" Vance',
-  title: 'Skyline Ridge & Coastline Pass',
+  code: '',
+  hostId: 'usr_me',
+  hostName: 'You (Host)',
+  title: 'My Ride',
   status: 'idle',
   startTime: 0,
-  route: [DEFAULT_COORDINATES],
+  route: [],
   distanceKm: 0,
   maxSpeedKmh: 0,
   avgSpeedKmh: 0,
   currentSpeedKmh: 0,
-  batteryPct: 94,
+  batteryPct: 100,
   currentLeanAngle: 0,
   checkInDueAt: undefined,
   lastUpdated: Date.now(),
+  // Dummy mock host profile and simulated participants commented out per user request:
+  /*
+  code: '748291',
+  hostId: 'usr_rider_01',
+  hostName: 'Alex "Apex" Vance',
+  title: 'Skyline Ridge & Coastline Pass',
+  route: [DEFAULT_COORDINATES],
   participants: [
     {
       id: 'usr_rider_01',
@@ -100,6 +107,8 @@ const createInitialSession = (): RideSession => ({
       distanceCoveredKm: 0,
     },
   ],
+  */
+  participants: [],
 });
 
 const INITIAL_HISTORY: RideHistoryItem[] = [];
@@ -117,7 +126,7 @@ export const useRideStore = create<RideState>((set, get) => ({
   history: INITIAL_HISTORY,
   isTracking: false,
   manualRefreshCounter: 0,
-  isSimulatingTelemetry: true,
+  isSimulatingTelemetry: false,
 
   startRide: async (title = 'Live Group Ride') => {
     const battery = await getBatteryLevelSafe();
@@ -349,7 +358,7 @@ export const useRideStore = create<RideState>((set, get) => ({
         addedDist = calculateDistanceKm(lastPoint.lat, lastPoint.lng, smoothedPos.lat, smoothedPos.lng);
       }
 
-      const updatedParticipants = state.currentSession.participants.map((p) => {
+      let updatedParticipants = state.currentSession.participants.map((p) => {
         if (p.role === 'host') {
           return {
             ...p,
@@ -360,6 +369,25 @@ export const useRideStore = create<RideState>((set, get) => ({
         }
         return p;
       });
+
+      if (updatedParticipants.length === 0) {
+        updatedParticipants = [
+          {
+            id: state.currentSession.hostId || 'usr_me',
+            name: state.currentSession.hostName || 'You (Host)',
+            phone: '',
+            bikeModel: 'Motorcycle',
+            role: 'host',
+            status: 'approved',
+            currentPosition: smoothedPos,
+            speedKmh: Math.round(smoothedPos.speed || 0),
+            batteryPct: 100,
+            lastPing: Date.now(),
+            isSOS: false,
+            distanceCoveredKm: 0,
+          },
+        ];
+      }
 
       return {
         currentSession: {
