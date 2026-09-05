@@ -8,4 +8,5 @@ export interface GeoPoint {
   timestamp: number;
 }
 
-export type MapTileLayerType = 'osm' | 'dark' | 'satellite' | 'terrain';
+export type MapTileLayerType = 'osm' | 'positron' | 'dark' | 'satellite' | 'terrain';
+export type MapLayerId = MapTileLayerType;
