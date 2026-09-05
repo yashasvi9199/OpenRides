@@ -127,7 +127,7 @@ export const MedicalProfileEditor: React.FC<MedicalProfileEditorProps> = ({
           </div>
           <div>
             <h2 className="text-lg font-bold text-slate-900">Rider Medical Profile & I.C.E.</h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-600 font-medium">
               Information displayed when emergency responders scan your helmet QR code
             </p>
           </div>
@@ -145,12 +145,12 @@ export const MedicalProfileEditor: React.FC<MedicalProfileEditorProps> = ({
       <form onSubmit={handleSaveAll} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Rider & Motorcycle Details */}
         <Card className="flex flex-col gap-4 bg-white border-slate-200">
-          <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider border-b border-slate-200 pb-2">
+          <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider border-b border-slate-200 pb-2">
             Rider & Vehicle Information
           </h3>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Rider Full Name</label>
+            <label className="block text-xs font-bold text-slate-700 mb-1">Rider Full Name</label>
             <input
               type="text"
               value={formData.name}
@@ -212,26 +212,26 @@ export const MedicalProfileEditor: React.FC<MedicalProfileEditorProps> = ({
 
         {/* Medical & Paramedic Notes */}
         <Card className="flex flex-col gap-4 bg-white border-slate-200">
-          <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider border-b border-slate-200 pb-2">
+          <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider border-b border-slate-200 pb-2">
             Allergies & Medical Alerts
           </h3>
 
           {/* Allergies tag list */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">
               Known Drug & Food Allergies
             </label>
             <div className="flex flex-wrap gap-1.5 mb-2">
               {allergiesList.map((alg) => (
                 <span
                   key={alg}
-                  className="bg-red-50 text-red-700 border border-red-200 text-xs px-2.5 py-1 rounded-lg flex items-center gap-1.5"
+                  className="bg-red-50 text-red-800 border border-red-200 text-xs px-2.5 py-1 rounded-lg flex items-center gap-1.5 font-medium"
                 >
                   <span>{alg}</span>
                   <button
                     type="button"
                     onClick={() => handleRemoveAllergy(alg)}
-                    className="text-red-500 hover:text-red-900"
+                    className="text-red-600 hover:text-red-900 font-bold"
                   >
                     ×
                   </button>
@@ -254,20 +254,20 @@ export const MedicalProfileEditor: React.FC<MedicalProfileEditorProps> = ({
 
           {/* Medical Conditions */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+            <label className="block text-xs font-bold text-slate-700 mb-1.5">
               Conditions / Daily Medications
             </label>
             <div className="flex flex-wrap gap-1.5 mb-2">
               {conditionsList.map((cond) => (
                 <span
                   key={cond}
-                  className="bg-slate-100 text-slate-700 border border-slate-200 text-xs px-2.5 py-1 rounded-lg flex items-center gap-1.5"
+                  className="bg-slate-100 text-slate-800 border border-slate-200 text-xs px-2.5 py-1 rounded-lg flex items-center gap-1.5 font-medium"
                 >
                   <span>{cond}</span>
                   <button
                     type="button"
                     onClick={() => handleRemoveCondition(cond)}
-                    className="text-slate-500 hover:text-slate-900"
+                    className="text-slate-600 hover:text-slate-900 font-bold"
                   >
                     ×
                   </button>
@@ -289,7 +289,7 @@ export const MedicalProfileEditor: React.FC<MedicalProfileEditorProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-xs font-bold text-slate-700 mb-1">
               Instructions for First Responders & Paramedics
             </label>
             <textarea
@@ -305,11 +305,11 @@ export const MedicalProfileEditor: React.FC<MedicalProfileEditorProps> = ({
         {/* Emergency ICE Contacts List */}
         <Card className="md:col-span-2 flex flex-col gap-4 bg-white border-slate-200">
           <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-            <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-              <Phone className="w-4 h-4 text-cyan-600" />
+            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+              <Phone className="w-4 h-4 text-cyan-700" />
               <span>In Case of Emergency (I.C.E.) Contacts</span>
             </h3>
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-slate-600 font-medium">
               {user.emergencyContacts.length} Contacts Configured
             </span>
           </div>
@@ -329,14 +329,14 @@ export const MedicalProfileEditor: React.FC<MedicalProfileEditorProps> = ({
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-slate-500 mt-0.5">{contact.relationship}</p>
-                  <p className="text-xs font-mono font-bold text-cyan-700 mt-1">{contact.phone}</p>
+                  <p className="text-xs text-slate-600 mt-0.5">{contact.relationship}</p>
+                  <p className="text-xs font-mono font-bold text-cyan-800 mt-1">{contact.phone}</p>
                 </div>
 
                 <div className="flex items-center justify-between pt-3 mt-2 border-t border-slate-200">
                   <a
                     href={`tel:${contact.phone}`}
-                    className="text-xs text-emerald-600 hover:underline flex items-center gap-1 font-semibold"
+                    className="text-xs text-emerald-700 hover:underline flex items-center gap-1 font-bold"
                   >
                     <Phone className="w-3 h-3" />
                     <span>Test Dial</span>
@@ -344,7 +344,7 @@ export const MedicalProfileEditor: React.FC<MedicalProfileEditorProps> = ({
                   <button
                     type="button"
                     onClick={() => onRemoveContact(contact.id)}
-                    className="text-slate-500 hover:text-red-500 p-1 cursor-pointer transition-colors"
+                    className="text-slate-500 hover:text-red-700 p-1 cursor-pointer transition-colors"
                     title="Remove Contact"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -356,7 +356,7 @@ export const MedicalProfileEditor: React.FC<MedicalProfileEditorProps> = ({
 
           {/* Add Contact Sub-form */}
           <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 mt-2">
-            <h4 className="text-xs font-bold text-slate-700 mb-3 uppercase tracking-wider">
+            <h4 className="text-xs font-bold text-slate-800 mb-3 uppercase tracking-wider">
               Add New Emergency Contact
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
