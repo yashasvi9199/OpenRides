@@ -408,7 +408,7 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
             placeholder="Search destination..."
             value={searchQuery}
             onChange={(e) => handleSearch(e.target.value)}
-            className="w-full px-4 py-2.5 text-xs text-slate-800 bg-transparent focus:outline-none placeholder:text-slate-400 font-sans"
+            className="w-full px-4 py-2.5 text-xs text-slate-800 bg-transparent focus:outline-none placeholder:text-slate-500 font-sans"
           />
           {searchResults.length > 0 && (
             <div className="border-t border-slate-100 max-h-48 overflow-y-auto bg-white">
@@ -446,7 +446,7 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
           onClick={() => setCheckpointMode(!checkpointMode)}
           className={`flex items-center gap-1.5 px-3 py-2 border rounded-xl font-bold text-xs transition-all cursor-pointer shadow-md ${
             checkpointMode
-              ? 'bg-cyan-500 text-white border-cyan-400'
+              ? 'bg-cyan-500 text-slate-950 border-cyan-400 font-extrabold'
               : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200'
           }`}
         >
@@ -523,10 +523,10 @@ export const LiveRideMap: React.FC<LiveRideMapProps> = React.memo(({
             {session.status === 'active' ? 'Live Telemetry' : session.status}
           </span>
         </div>
-        <div className="text-xs text-slate-500 font-mono">
+        <div className="text-xs text-slate-600 font-mono font-medium">
           {session.participants.length} Active Riders
         </div>
-        <div className="hidden sm:block text-xs text-cyan-600 font-mono">
+        <div className="hidden sm:block text-xs text-cyan-700 font-mono font-bold">
           Heading: {currentPos.heading || 0}°
         </div>
       </div>

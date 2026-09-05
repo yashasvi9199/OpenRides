@@ -122,10 +122,10 @@ export const RideController: React.FC<RideControllerProps> = React.memo(({
         {/* Test Simulated Crash Sensor Button */}
         <button
           onClick={onSimulateCrash}
-          className="flex items-center gap-1.5 px-3 py-2.5 bg-white hover:bg-amber-50 text-slate-700 hover:text-amber-700 border border-slate-200 hover:border-amber-200 rounded-xl text-xs font-bold transition-all cursor-pointer"
+          className="flex items-center gap-1.5 px-3 py-2.5 bg-white hover:bg-amber-50 text-slate-700 hover:text-amber-800 border border-slate-200 hover:border-amber-300 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-sm"
           title="Test Gyroscope / G-Force Crash Sensor & 10s Countdown"
         >
-          <Activity className="w-3.5 h-3.5 text-amber-500" />
+          <Activity className="w-3.5 h-3.5 text-amber-600" />
           <span className="hidden md:inline">Test Crash</span>
         </button>
 

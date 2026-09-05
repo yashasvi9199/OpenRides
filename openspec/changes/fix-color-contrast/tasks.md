@@ -8,11 +8,11 @@
 
 ## 2. Live Cockpit & Map Overlays Contrast Fixes
 
-- [ ] 2.1 Refactor speedometer typography in `LiveTelemetryOverlay.tsx` to replace camouflaged `text-white` with high-contrast `text-slate-900` on the cockpit glass card.
-- [ ] 2.2 Update gauge circular background track, unit label (`KM/H`), and lean angle indicator pill in `LiveTelemetryOverlay.tsx` to high-contrast styling.
-- [ ] 2.3 Refactor `RideController.tsx` secondary buttons and history buttons to use high-contrast text and icon colors.
-- [ ] 2.4 Update `MapControls.tsx` muted text (`text-slate-500` "Data Store Sync") to high-contrast `text-slate-300` and ensure all control icons remain crisp against `bg-slate-900/95`.
-- [ ] 2.5 Audit and fix search input placeholder and toggle button text in `LiveRideMap.tsx`.
+- [x] 2.1 Refactor speedometer typography in `LiveTelemetryOverlay.tsx` to replace camouflaged `text-white` with high-contrast `text-slate-900` on the cockpit glass card.
+- [x] 2.2 Update gauge circular background track, unit label (`KM/H`), and lean angle indicator pill in `LiveTelemetryOverlay.tsx` to high-contrast styling.
+- [x] 2.3 Refactor `RideController.tsx` secondary buttons and history buttons to use high-contrast text and icon colors.
+- [x] 2.4 Update `MapControls.tsx` muted text (`text-slate-500` "Data Store Sync") to high-contrast `text-slate-300` and ensure all control icons remain crisp against `bg-slate-900/95`.
+- [x] 2.5 Audit and fix search input placeholder and toggle button text in `LiveRideMap.tsx`.
 
 ## 3. Family Dashboard, Group Roster & Modals
 

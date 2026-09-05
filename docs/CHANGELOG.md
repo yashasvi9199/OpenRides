@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed low-contrast white text overrides on primary cyan buttons across cockpit, profile, and modal views.
 - Upgraded StatBadge palette and typography to high-contrast slate numbers and clear labels.
 - Enhanced BottomNav and Toast alert colors for readability against light surfaces.
+- Replaced camouflaged white speedometer text in LiveTelemetryOverlay with high-contrast text-slate-900.
+- Standardized MapControls and LiveRideMap telemetry tickers and search input contrast.
 
 ## [1.1.0] - 2026-08-21
 

@@ -51,7 +51,7 @@ export const LiveTelemetryOverlay: React.FC<LiveTelemetryOverlayProps> = React.m
                   cx="50"
                   cy="50"
                   r="42"
-                  className="stroke-slate-800"
+                  className="stroke-slate-200"
                   strokeWidth="8"
                   fill="none"
                   strokeDasharray="210"
@@ -62,7 +62,7 @@ export const LiveTelemetryOverlay: React.FC<LiveTelemetryOverlayProps> = React.m
                   cx="50"
                   cy="50"
                   r="42"
-                  className="stroke-cyan-400 transition-all duration-300 drop-shadow-[0_0_10px_rgba(6,182,212,0.6)]"
+                  className="stroke-cyan-600 transition-all duration-300 drop-shadow-[0_0_8px_rgba(6,182,212,0.4)]"
                   strokeWidth="8"
                   fill="none"
                   strokeDasharray="280"
@@ -73,21 +73,21 @@ export const LiveTelemetryOverlay: React.FC<LiveTelemetryOverlayProps> = React.m
 
               {/* Central Speed Value */}
               <div className="absolute flex flex-col items-center justify-center text-center">
-                <span className="font-mono text-5xl sm:text-6xl font-black text-white tracking-tighter drop-shadow-md">
+                <span className="font-mono text-5xl sm:text-6xl font-black text-slate-900 tracking-tighter">
                   {speed}
                 </span>
-                <span className="text-[11px] font-bold tracking-widest text-cyan-400 uppercase -mt-1">
+                <span className="text-[11px] font-black tracking-widest text-cyan-700 uppercase -mt-1">
                   KM / H
                 </span>
               </div>
             </div>
 
             {/* Lean Angle Simulator Pill */}
-            <div className="flex items-center gap-2 mt-1 bg-slate-950/80 px-3 py-1 rounded-full border border-slate-800 text-xs">
-              <span className="text-slate-400 text-[10px] uppercase font-bold">Lean Angle:</span>
+            <div className="flex items-center gap-2 mt-1 bg-slate-100 px-3 py-1 rounded-full border border-slate-200 text-xs">
+              <span className="text-slate-600 text-[10px] uppercase font-bold">Lean Angle:</span>
               <span
                 className={`font-mono font-bold ${
-                  Math.abs(leanAngle) > 20 ? 'text-amber-400' : 'text-emerald-400'
+                  Math.abs(leanAngle) > 20 ? 'text-amber-700' : 'text-emerald-700'
                 }`}
               >
                 {leanAngle > 0 ? `+${leanAngle}° R` : leanAngle < 0 ? `${leanAngle}° L` : `0°`}
@@ -133,16 +133,16 @@ export const LiveTelemetryOverlay: React.FC<LiveTelemetryOverlayProps> = React.m
 
         {/* Dead-man's Safety Check-in Reminder Banner */}
         {session.status === 'active' && session.checkInDueAt && (
-          <div className="mt-4 pt-3 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs bg-slate-950/60 p-2.5 rounded-xl border border-cyan-500/20">
-            <div className="flex items-center gap-2 text-slate-300">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+          <div className="mt-4 pt-3 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs bg-emerald-50/90 p-2.5 rounded-xl border border-emerald-200">
+            <div className="flex items-center gap-2 text-slate-800 font-medium">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>
                 Safety Check-in active: Automated guardian alert if inactive for 30m.
               </span>
             </div>
             <button
               onClick={onConfirmCheckIn}
-              className="px-3 py-1 bg-emerald-500/20 hover:bg-emerald-500 text-emerald-300 hover:text-slate-950 rounded-lg font-bold border border-emerald-500/40 transition-colors text-xs cursor-pointer"
+              className="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold transition-colors text-xs cursor-pointer shadow-sm"
             >
               I'm OK (Check-In)
             </button>

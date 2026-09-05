@@ -69,7 +69,7 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
       {/* Top Action Bar: Manual Refresh Button & Last Ping Badge */}
       <div className="flex items-center gap-2 bg-slate-900/95 backdrop-blur-md p-1.5 rounded-2xl border border-slate-800 shadow-xl">
         <div className="hidden sm:flex flex-col items-end px-2">
-          <span className="text-[9px] uppercase tracking-wider text-slate-500 font-bold">Data Store Sync</span>
+          <span className="text-[9px] uppercase tracking-wider text-slate-300 font-bold">Data Store Sync</span>
           <span className="text-[11px] font-mono font-semibold text-cyan-400">
             {formatTimestamp(lastUpdated)}
           </span>
