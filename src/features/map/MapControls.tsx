@@ -133,24 +133,10 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
 
           {/* Layer Flyout Menu */}
           {showLayerMenu && (
-            <div className="absolute right-full mr-2 top-0 bg-slate-900 border border-slate-800 rounded-xl p-2 shadow-2xl w-44 z-50 flex flex-col gap-1 animate-in fade-in zoom-in-95">
+            <div className="absolute right-full mr-2 top-0 bg-slate-900 border border-slate-800 rounded-xl p-2 shadow-2xl w-48 z-50 flex flex-col gap-1 animate-in fade-in zoom-in-95">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 px-2 py-1">
                 Map Tiles (100% Free)
               </span>
-              <button
-                onClick={() => {
-                  onLayerChange('dark');
-                  setShowLayerMenu(false);
-                }}
-                className={`text-left text-xs px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer flex items-center justify-between ${
-                  currentLayer === 'dark'
-                    ? 'bg-cyan-500/10 text-cyan-400 font-semibold'
-                    : 'text-slate-300 hover:bg-slate-800'
-                }`}
-              >
-                <span>Vector Dark</span>
-                {currentLayer === 'dark' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
-              </button>
               <button
                 onClick={() => {
                   onLayerChange('osm');
@@ -162,8 +148,36 @@ export const MapControls: React.FC<MapControlsProps> = React.memo(({
                     : 'text-slate-300 hover:bg-slate-800'
                 }`}
               >
-                <span>Positron Light</span>
+                <span>OpenStreetMap</span>
                 {currentLayer === 'osm' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
+              </button>
+              <button
+                onClick={() => {
+                  onLayerChange('positron');
+                  setShowLayerMenu(false);
+                }}
+                className={`text-left text-xs px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer flex items-center justify-between ${
+                  currentLayer === 'positron'
+                    ? 'bg-cyan-500/10 text-cyan-400 font-semibold'
+                    : 'text-slate-300 hover:bg-slate-800'
+                }`}
+              >
+                <span>Positron Light</span>
+                {currentLayer === 'positron' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
+              </button>
+              <button
+                onClick={() => {
+                  onLayerChange('dark');
+                  setShowLayerMenu(false);
+                }}
+                className={`text-left text-xs px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer flex items-center justify-between ${
+                  currentLayer === 'dark'
+                    ? 'bg-cyan-500/10 text-cyan-400 font-semibold'
+                    : 'text-slate-300 hover:bg-slate-800'
+                }`}
+              >
+                <span>Dark Matter</span>
+                {currentLayer === 'dark' && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />}
               </button>
               <button
                 onClick={() => {
