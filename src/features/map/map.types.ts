@@ -10,3 +10,8 @@ export interface GeoPoint {
 
 export type MapTileLayerType = 'osm' | 'positron' | 'dark' | 'satellite' | 'terrain';
 export type MapLayerId = MapTileLayerType;
+
+declare module '*?url' {
+  const content: string;
+  export default content;
+}
