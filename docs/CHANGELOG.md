@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2026-09-05
+
+### Fixed
+- MapLibre GL worker initialization replaced with standard asset URL resolution to prevent inline worker failures.
+- Standardized `MAP_LAYERS` and aligned layer switcher across `MapControls`, `MapLayers`, and `LiveRideMap` supporting OpenStreetMap, Positron Light, Dark Matter, Satellite Hybrid, and Topo Terrain.
+- Added automatic style loading error fallback to reliable OpenStreetMap raster tiles.
+- Added `ResizeObserver` on map container to guarantee map canvas fills container bounds and eliminates 0px canvas collapse.
+- Commented out dummy initial mock participants and session defaults in `rideStore.ts` and `GroupRideModal.tsx`.
+
 ## [1.1.1] - 2026-09-05
 
 ### Fixed
